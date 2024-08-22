@@ -17,7 +17,7 @@ const Sidebar = () => {
     },
     {
       label: "Facilities???",
-      path: "/facilities",
+      path: "/burials",
       icon: <HeartOff className="h-4 w-4" />,
     },
   ];

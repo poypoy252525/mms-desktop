@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card";
 import prisma from "@/prisma/db";
 import { Burial } from "@prisma/client";
+import Link from "next/link";
 import React from "react";
 
 const DeathCard = async ({ burial }: { burial: Burial }) => {
@@ -21,10 +22,10 @@ const DeathCard = async ({ burial }: { burial: Burial }) => {
           className="w-full h-full pb-1"
           alt="profile_image"
         />
-        <CardTitle className="text-lg">{`${death?.firstName} ${death?.lastName}`}</CardTitle>
-        <CardDescription>
-          {`${death?.dateOfBirth} - ${death?.dateOfDeath}`}
-        </CardDescription>
+        <Link href={`/burials/${burial.id}`}>
+          <CardTitle className="text-lg">{`${death?.firstName} ${death?.lastName}`}</CardTitle>
+        </Link>
+        <CardDescription>{death?.causeOfDeath}</CardDescription>
       </CardContent>
     </Card>
   );
