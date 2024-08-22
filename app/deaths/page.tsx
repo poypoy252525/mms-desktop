@@ -8,7 +8,7 @@ import prisma from "@/prisma/db";
 
 const DeathsPage = async () => {
   const getData = async (): Promise<Death[]> => {
-    return prisma.death.findMany();
+    return await prisma.death.findMany({});
   };
 
   let data;
@@ -25,5 +25,7 @@ const DeathsPage = async () => {
     </PageWrapper>
   );
 };
+
+export const dynamic = "force-dynamic";
 
 export default DeathsPage;

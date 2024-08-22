@@ -8,7 +8,7 @@ import prisma from "@/prisma/db";
 
 const UsersPage = async () => {
   const getData = async (): Promise<User[]> => {
-    return prisma.user.findMany();
+    return await prisma.user.findMany();
   };
 
   let data;
@@ -26,5 +26,7 @@ const UsersPage = async () => {
     </PageWrapper>
   );
 };
+
+export const dynamic = "force-dynamic";
 
 export default UsersPage;

@@ -2,12 +2,6 @@ import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 import { date, z } from "zod";
 
-const locationSchema = z.object({
-  building: z.string().min(2),
-  row: z.string().min(1),
-  columns: z.string().min(1),
-});
-
 const addDeathSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
@@ -17,6 +11,9 @@ const addDeathSchema = z.object({
   nextOfKinName: z.string(),
   nextOfKinRelationship: z.string(),
   nextOfKinContact: z.number().min(1),
+  block: z.string().min(2),
+  row: z.string().min(1),
+  plotNumber: z.string().min(1),
 });
 
 export const GET = async (request: NextRequest) => {
@@ -52,6 +49,13 @@ export const POST = async (request: NextRequest) => {
       nextOfKinName: death.nextOfKinName,
       nextOfKinRelationship: death.nextOfKinRelationship,
       nextOfKinContact: death.nextOfKinContact,
+      burial: {
+        create: {
+          block: death.block,
+          plotNumber: death.plotNumber,
+          row: death.plotNumber,
+        },
+      },
     },
   });
 
