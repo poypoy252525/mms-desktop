@@ -15,17 +15,24 @@ model User {
 }
 
 model Death {
-  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
   firstName             String
   lastName              String
   dateOfBirth           DateTime
   dateOfDeath           DateTime
-  dateCreated           DateTime @default(now())
+  dateCreated           DateTime  @default(now())
   causeOfDeath          String
   nextOfKinName         String
   nextOfKinRelationship String
   nextOfKinContact      Int
-  building              String
-  row                   String
-  column                String
+  location              Location?
+}
+
+model Location {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  building String
+  row      String
+  column   String
+  death    Death  @relation(fields: [deathId], references: [id])
+  deathId  String @unique @db.ObjectId
 }
