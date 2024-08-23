@@ -25,7 +25,7 @@ model Death {
   nextOfKinName         String
   nextOfKinRelationship String
   nextOfKinContact      Int
-  status                Status @default(PRESENT)
+  status                Status   @default(PRESENT)
   burial                Burial?
 }
 
