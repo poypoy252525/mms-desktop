@@ -1,6 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Bell, BrickWall, Gauge, HeartOff, Users } from "lucide-react";
+import {
+  Bell,
+  BrickWall,
+  Gauge,
+  HeartOff,
+  Milestone,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { ReactNode } from "react";
@@ -11,14 +18,14 @@ const Sidebar = () => {
     { label: "Dashboard", path: "/", icon: <Gauge className="h-4 w-4" /> },
     { label: "Users", path: "/users", icon: <Users className="h-4 w-4" /> },
     {
-      label: "Mga patay",
+      label: "Death records",
       path: "/deaths",
       icon: <HeartOff className="h-4 w-4" />,
     },
     {
       label: "Burials",
       path: "/burials",
-      icon: <HeartOff className="h-4 w-4" />,
+      icon: <Milestone className="h-4 w-4" />,
     },
   ];
 

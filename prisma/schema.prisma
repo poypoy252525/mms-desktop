@@ -26,7 +26,8 @@ model Death {
   nextOfKinRelationship String
   nextOfKinContact      Int
   status                Status   @default(PRESENT)
-  burial                Burial?
+  burial                Burial   @relation(fields: [burialId], references: [id])
+  burialId              String   @db.ObjectId
 }
 
 enum Status {
@@ -40,6 +41,6 @@ model Burial {
   row         String
   plotNumber  String
   coordinates String?
-  death       Death   @relation(fields: [deathId], references: [id])
-  deathId     String  @unique @db.ObjectId
+  isVacant    Boolean
+  deaths      Death[]
 }
