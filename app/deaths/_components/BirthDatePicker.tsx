@@ -14,10 +14,10 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { newDeathSchemaType } from "../new/page";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import { newDeathSchemaType } from "./DeathRecordForm";
 
 const BirthDatePicker = ({
   form,

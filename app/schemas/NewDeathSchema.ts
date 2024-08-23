@@ -9,4 +9,5 @@ export const newDeathSchema = z.object({
   nextOfKinName: z.string(),
   nextOfKinRelationship: z.string(),
   nextOfKinContact: z.string().min(1),
+  burialId: z.string(),
 });

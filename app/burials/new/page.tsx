@@ -1,4 +1,5 @@
 "use client";
+import CustomFormInput from "@/app/_components/CustomFormInput";
 import PageHeading from "@/app/_components/PageHeading";
 import PageWrapper from "@/app/_components/PageWrapper";
 import { burialSchema } from "@/app/schemas/BurialSchema";
@@ -53,24 +54,13 @@ const CreateBurialPage = () => {
     <PageWrapper>
       <PageHeading>Create Burial</PageHeading>
       <Form {...form}>
-        <form
-          method="POST"
-          onSubmit={form.handleSubmit((data) => onSubmit(data))}
-        >
+        <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col space-y-4">
-              <FormField
+              <CustomFormInput
                 control={form.control}
                 name="block"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Block</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Input block..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Block"
               />
               <div className="flex space-x-4 w-full">
                 <FormField
@@ -103,22 +93,10 @@ const CreateBurialPage = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
+                <CustomFormInput
                   control={form.control}
                   name="plotNumber"
-                  render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>Plot number</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Input number..."
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  label="Plot number"
                 />
               </div>
             </div>
