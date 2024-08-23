@@ -23,13 +23,19 @@ const BurialsPage = async () => {
           </Button>
         </Link>
       </div>
-      <div className="grid grid-cols-6 gap-4">
-        {burials.map((burial) => (
-          <Link key={burial.id} href={`/burials/${burial.id}`}>
-            <DeathCard burial={burial} />
-          </Link>
-        ))}
-      </div>
+      {burials.length ? (
+        <div className="grid grid-cols-6 gap-4">
+          {burials.map((burial) => (
+            <Link key={burial.id} href={`/burials/${burial.id}`}>
+              <DeathCard burial={burial} />
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-muted-foreground">No burial record.</p>
+        </div>
+      )}
     </PageWrapper>
   );
 };

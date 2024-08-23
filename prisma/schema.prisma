@@ -41,6 +41,6 @@ model Burial {
   row         String
   plotNumber  String
   coordinates String?
-  isVacant    Boolean
+  isVacant    Boolean @default(true)
   deaths      Death[]
 }
