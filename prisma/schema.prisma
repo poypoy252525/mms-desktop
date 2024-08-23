@@ -25,7 +25,13 @@ model Death {
   nextOfKinName         String
   nextOfKinRelationship String
   nextOfKinContact      Int
+  status                Status @default(PRESENT)
   burial                Burial?
+}
+
+enum Status {
+  PRESENT
+  PAST
 }
 
 model Burial {

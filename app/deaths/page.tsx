@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PageHeading from "../_components/PageHeading";
 import { DataTable } from "../_components/DataTable";
-import { columns } from "./Columns";
+import { columns } from "./_components/Columns";
 import { Death } from "@prisma/client";
 import PageWrapper from "../_components/PageWrapper";
 import prisma from "@/prisma/db";
