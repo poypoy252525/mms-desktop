@@ -35,7 +35,7 @@ export const POST = async (request: NextRequest) => {
       nextOfKinName: death.nextOfKinName,
       nextOfKinRelationship: death.nextOfKinRelationship,
       nextOfKinContact: death.nextOfKinContact,
-      burialId: "66c81c0ebd1fdce3a02010d8",
+      burialId: death.burialId,
     },
   });
 

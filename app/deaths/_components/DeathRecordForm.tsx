@@ -11,6 +11,7 @@ import BirthDatePicker from "../_components/BirthDatePicker";
 import BurialPickerCard from "../_components/BurialPickerCard";
 import DeathDatePicker from "../_components/DeathDatePicker";
 import axios from "axios";
+import { burialVacantSchemaType } from "@/app/schemas/BurialSchema";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -19,22 +20,27 @@ const DeathRecordForm = () => {
   const form = useForm<newDeathSchemaType>({
     resolver: zodResolver(newDeathSchema),
     defaultValues: {
-      causeOfDeath: "sdf",
+      causeOfDeath: "",
       dateOfBirth: new Date(),
       dateOfDeath: new Date(),
-      firstName: "sdf",
-      lastName: "sdf",
-      nextOfKinContact: "sdf",
-      nextOfKinName: "sdf",
-      nextOfKinRelationship: "sdf",
-      burialId: "sdfhj",
+      firstName: "",
+      lastName: "",
+      nextOfKinContact: "",
+      nextOfKinName: "",
+      nextOfKinRelationship: "",
+      burialId: "",
     },
   });
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => {
+          console.log(data);
           await axios.post<newDeathSchemaType>("/api/deaths", data);
+          await axios.patch<burialVacantSchemaType>("/api/burials", {
+            isVacant: false,
+            burialId: data.burialId,
+          });
           router.push("/deaths");
           router.refresh();
         })}
@@ -87,7 +93,7 @@ const DeathRecordForm = () => {
                 name="nextOfKinContact"
                 label="Next of Kin contact"
                 placeholder="Next of Kin contact..."
-                // type="number"
+                type="number"
               />
             </div>
           </div>
@@ -105,7 +111,10 @@ const DeathRecordForm = () => {
               </div>
               <div className="flex w-full">
                 <BurialPickerCard
-                  callback={(burial) => form.setValue("burialId", burial.id)}
+                  callback={(burial) => {
+                    form.setValue("burialId", burial.id);
+                    // console.log(burial.id);
+                  }}
                 />
               </div>
             </div>
