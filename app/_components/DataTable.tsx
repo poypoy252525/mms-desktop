@@ -22,19 +22,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterColumn: string;
+  actions?: ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   filterColumn,
+  actions,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
@@ -71,6 +73,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        {actions}
       </div>
       <div className="rounded-md border">
         <Table>
