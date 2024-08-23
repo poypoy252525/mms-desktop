@@ -24,7 +24,7 @@ model Death {
   causeOfDeath          String
   nextOfKinName         String
   nextOfKinRelationship String
-  nextOfKinContact      Int
+  nextOfKinContact      String
   status                Status   @default(PRESENT)
   burial                Burial   @relation(fields: [burialId], references: [id])
   burialId              String   @db.ObjectId

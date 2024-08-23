@@ -1,17 +1,6 @@
+import { newDeathSchema } from "@/app/schemas/NewDeathSchema";
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-import { date, z } from "zod";
-
-const addDeathSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  dateOfBirth: z.date(),
-  dateOfDeath: z.date(),
-  causeOfDeath: z.string().min(1),
-  nextOfKinName: z.string(),
-  nextOfKinRelationship: z.string(),
-  nextOfKinContact: z.number().min(1),
-});
 
 export const GET = async (request: NextRequest) => {
   const deaths = await prisma.death.findMany();
@@ -30,7 +19,7 @@ export const POST = async (request: NextRequest) => {
   body.dateOfBirth = new Date(body.dateOfBirth);
   body.dateOfDeath = new Date(body.dateOfDeath);
 
-  const validation = addDeathSchema.safeParse(body);
+  const validation = newDeathSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 

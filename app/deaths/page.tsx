@@ -5,6 +5,7 @@ import { columns } from "./_components/Columns";
 import { Death } from "@prisma/client";
 import PageWrapper from "../_components/PageWrapper";
 import prisma from "@/prisma/db";
+import Actions from "./_components/Actions";
 
 const DeathsPage = async () => {
   const getData = async (): Promise<Death[]> => {
@@ -21,7 +22,12 @@ const DeathsPage = async () => {
   return (
     <PageWrapper>
       <PageHeading>Death Records</PageHeading>
-      <DataTable filterColumn="firstName" columns={columns} data={data} />
+      <DataTable
+        filterColumn="firstName"
+        columns={columns}
+        data={data}
+        actions={<Actions />}
+      />
     </PageWrapper>
   );
 };
