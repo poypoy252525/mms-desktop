@@ -53,7 +53,7 @@ export const POST = async (request: NextRequest) => {
         create: {
           block: death.block,
           plotNumber: death.plotNumber,
-          row: death.plotNumber,
+          row: death.row,
         },
       },
     },

@@ -23,9 +23,11 @@ const DeathCard = async ({ burial }: { burial: Burial }) => {
           alt="profile_image"
         />
         <Link href={`/burials/${burial.id}`}>
-          <CardTitle className="text-lg">{`${death?.firstName} ${death?.lastName}`}</CardTitle>
+          <CardTitle className="text-lg">
+            {`${burial.block} - ${burial.row + burial.plotNumber}`}
+          </CardTitle>
         </Link>
-        <CardDescription>{death?.causeOfDeath}</CardDescription>
+        <CardDescription>{`${death?.firstName} ${death?.lastName}`}</CardDescription>
       </CardContent>
     </Card>
   );
