@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -6,32 +7,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Burial } from "@prisma/client";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CustomFormSelector from "./CustomFormSelector";
 
 interface Props {
-  callback: (burial: Burial) => void;
+  callback?: (burial: Burial) => void;
+  burials: Burial[];
 }
 
-const BurialPickerCard = ({ callback }: Props) => {
-  const [burials, setBurials] = useState<Burial[]>();
+const BurialPickerCard = ({ callback, burials }: Props) => {
   const [block, setBlock] = useState<string>();
   const [row, setRow] = useState<string>();
   const [plotNumber, setPlotNumber] = useState<string>();
   const [burial, setBurial] = useState<Burial>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get<Burial[]>(`/api/burials/vacants`);
-        setBurials(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     setBurial(
@@ -42,7 +31,7 @@ const BurialPickerCard = ({ callback }: Props) => {
           burial.plotNumber === plotNumber
       )
     );
-    if (burial) callback(burial);
+    if (burial && callback) callback(burial);
   }, [block, row, plotNumber, burials, callback, burial]);
 
   let blocks = burials?.map((burial) => burial.block);

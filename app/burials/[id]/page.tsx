@@ -20,12 +20,12 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
       <h2 className="text-lg font-semibold">Current buried</h2>
       <div className="flex justify-between border-y py-5">
         <p className="text-muted-foreground">
-          {currentDeath
+          {currentDeath && !burial?.isVacant
             ? `${currentDeath?.firstName} ${currentDeath?.lastName} - ${currentDeath?.causeOfDeath}`
             : "vacant"}
         </p>
 
-        {currentDeath && (
+        {currentDeath && !burial?.isVacant && (
           <p className="text-muted-foreground">
             {`${currentDeath?.nextOfKinName} - ${currentDeath?.nextOfKinRelationship}`}
           </p>

@@ -12,10 +12,11 @@ import BurialPickerCard from "../_components/BurialPickerCard";
 import DeathDatePicker from "../_components/DeathDatePicker";
 import axios from "axios";
 import { burialVacantSchemaType } from "@/app/schemas/BurialSchema";
+import { Burial } from "@prisma/client";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
-const DeathRecordForm = () => {
+const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   const router = useRouter();
   const form = useForm<newDeathSchemaType>({
     resolver: zodResolver(newDeathSchema),
@@ -111,9 +112,9 @@ const DeathRecordForm = () => {
               </div>
               <div className="flex w-full">
                 <BurialPickerCard
+                  burials={burials}
                   callback={(burial) => {
                     form.setValue("burialId", burial.id);
-                    // console.log(burial.id);
                   }}
                 />
               </div>

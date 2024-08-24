@@ -10,5 +10,7 @@ export const GET = async (request: NextRequest) => {
 
   if (!burials) return NextResponse.json("no burials found", { status: 404 });
 
+  console.log(burials);
+
   return NextResponse.json(burials, { status: 200 });
 };
