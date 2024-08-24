@@ -26,12 +26,11 @@ const HomePage = () => {
         <div className="col-span-7">
           <Card>
             <CardHeader>
-              <h3 className="font-semibold leading-none tracking-tight">
-                Some title
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam.
-              </p>
+              <div className="">
+                <h3 className="font-semibold leading-none tracking-tight">
+                  Some title
+                </h3>
+              </div>
             </CardHeader>
             <CardContent>
               <CustomBarChart />

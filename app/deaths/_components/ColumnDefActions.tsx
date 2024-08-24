@@ -49,6 +49,7 @@ const ColumnDefActions = ({ death }: { death: Death }) => {
         <DropdownMenuItem>View details</DropdownMenuItem>
         <DropdownMenuItem>Edit details</DropdownMenuItem>
         <DropdownMenuSeparator />
+        <DropdownMenuItem>Remove from burial</DropdownMenuItem>
         <DropdownMenuItem onClick={handleDelete}>
           Delete record
         </DropdownMenuItem>

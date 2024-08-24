@@ -15,19 +15,20 @@ model User {
 }
 
 model Death {
-  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
   firstName             String
   lastName              String
   dateOfBirth           DateTime
   dateOfDeath           DateTime
-  dateCreated           DateTime @default(now())
+  dateCreated           DateTime  @default(now())
+  dateUpdated           DateTime? @updatedAt
   causeOfDeath          String
   nextOfKinName         String
   nextOfKinRelationship String
   nextOfKinContact      String
-  status                Status   @default(PRESENT)
-  burial                Burial   @relation(fields: [burialId], references: [id])
-  burialId              String   @db.ObjectId
+  status                Status    @default(PRESENT)
+  burial                Burial    @relation(fields: [burialId], references: [id])
+  burialId              String    @db.ObjectId
 }
 
 enum Status {
