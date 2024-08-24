@@ -1,8 +1,7 @@
 import PageHeading from "@/app/_components/PageHeading";
 import PageWrapper from "@/app/_components/PageWrapper";
-import DeathRecordForm from "../_components/DeathRecordForm";
-import BurialPickerCard from "../_components/BurialPickerCard";
 import prisma from "@/prisma/db";
+import DeathRecordForm from "../_components/DeathRecordForm";
 
 const CreateDeathRecord = async () => {
   const burials = await prisma.burial.findMany({
