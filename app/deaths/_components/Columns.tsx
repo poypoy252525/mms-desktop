@@ -18,6 +18,19 @@ export const columns: ColumnDef<Death>[] = [
     header: "Cause of Death",
   },
   {
+    accessorKey: "dateOfDeath",
+    header: "Date of death",
+    cell: ({ row: { original: death } }) => (
+      <p>
+        {new Date(death.dateOfDeath).toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        })}
+      </p>
+    ),
+  },
+  {
     id: "actions",
     cell: ({ row: { original: death } }) => <ColumnDefActions death={death} />,
   },

@@ -17,19 +17,21 @@ const HomePage = () => {
         {[0, 1, 2, 3].map((item) => (
           <div key={item} className="col-span-3">
             <Card>
-              <CardHeader>
-                <CardTitle>Lorem, ipsum.</CardTitle>
-              </CardHeader>
+              <CardContent>
+                <p></p>
+              </CardContent>
             </Card>
           </div>
         ))}
         <div className="col-span-7">
           <Card>
             <CardHeader>
-              <CardTitle>Some title</CardTitle>
-              <CardDescription>
+              <h3 className="font-semibold leading-none tracking-tight">
+                Some title
+              </h3>
+              <p className="text-sm text-muted-foreground">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam.
-              </CardDescription>
+              </p>
             </CardHeader>
             <CardContent>
               <CustomBarChart />
