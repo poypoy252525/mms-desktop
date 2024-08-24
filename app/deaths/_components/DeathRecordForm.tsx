@@ -10,13 +10,15 @@ import CustomFormInput from "../../_components/CustomFormInput";
 import BirthDatePicker from "../_components/BirthDatePicker";
 import BurialPickerCard from "../_components/BurialPickerCard";
 import DeathDatePicker from "../_components/DeathDatePicker";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { burialVacantSchemaType } from "@/app/schemas/BurialSchema";
-import { Burial } from "@prisma/client";
+import { Burial, Death } from "@prisma/client";
+import { toast, useToast } from "@/components/ui/use-toast";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
 const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
+  const { toast } = useToast();
   const router = useRouter();
   const form = useForm<newDeathSchemaType>({
     resolver: zodResolver(newDeathSchema),
@@ -32,20 +34,32 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
       burialId: "",
     },
   });
+
+  const onSubmit = async (data: newDeathSchemaType) => {
+    try {
+      await axios.post<newDeathSchemaType>("/api/deaths", data);
+      await axios.patch<burialVacantSchemaType>("/api/burials", {
+        isVacant: false,
+        burialId: data.burialId,
+      });
+      router.push("/deaths");
+      router.refresh();
+      toast({
+        title: "Created",
+        description: "New record has been added.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something is wrong...",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(async (data) => {
-          console.log(data);
-          await axios.post<newDeathSchemaType>("/api/deaths", data);
-          await axios.patch<burialVacantSchemaType>("/api/burials", {
-            isVacant: false,
-            burialId: data.burialId,
-          });
-          router.push("/deaths");
-          router.refresh();
-        })}
-      >
+      <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-8 space-y-4">
             <div className="grid grid-cols-2 gap-4 w-full">
