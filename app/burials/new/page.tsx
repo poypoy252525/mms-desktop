@@ -7,13 +7,11 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -23,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Burial } from "@prisma/client";
 import axios from "axios";
@@ -34,6 +33,7 @@ import { z } from "zod";
 type burialSchemeType = z.infer<typeof burialSchema>;
 
 const CreateBurialPage = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const form = useForm<burialSchemeType>({
     resolver: zodResolver(burialSchema),
@@ -45,9 +45,34 @@ const CreateBurialPage = () => {
   });
 
   const onSubmit = async (data: burialSchemeType) => {
-    await axios.post<Burial>("/api/burials", data);
-    router.push("/burials");
-    router.refresh();
+    try {
+      const { data: result } = await axios.post<{ isExist: boolean }>(
+        "/api/burials/exist",
+        {
+          block: data.block,
+          row: data.row,
+          plotNumber: data.plotNumber,
+        }
+      );
+      if (result.isExist) return console.log("burial already exist");
+      try {
+        await axios.post<Burial>("/api/burials", data);
+        router.push("/burials");
+        router.refresh();
+        toast({
+          title: "Created",
+          description: "Burial is successfully created",
+        });
+      } catch (error) {
+        console.log("can not post new burials", error);
+      }
+    } catch (error) {
+      toast({
+        title: "Burial error",
+        description: "Burial already exist",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
