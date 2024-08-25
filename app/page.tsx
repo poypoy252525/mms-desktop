@@ -1,9 +1,8 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import prisma from "@/prisma/db";
 import DeathAreaChart from "./_components/DeathAreaChart";
 import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
-import prisma from "@/prisma/db";
-import DateRangePicker from "./_components/DateRangePicker";
 
 const HomePage = async () => {
   const deaths = await prisma.death.findMany({});
