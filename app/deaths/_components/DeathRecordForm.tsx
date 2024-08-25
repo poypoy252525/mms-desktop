@@ -77,7 +77,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
                 placeholder="last name..."
               />
             </div>
-            <div className="grid grid-cols-12">
+            <div className="grid grid-cols-12 gap-4">
               <div className="col-span-4">
                 <CustomFormInput
                   control={form.control}

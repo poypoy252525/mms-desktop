@@ -31,8 +31,6 @@ export const PATCH = async (request: NextRequest) => {
 
   const data = validation.data;
 
-  console.log(data.burialId);
-
   const updated = await prisma.burial.update({
     data: {
       isVacant: data.isVacant,
