@@ -7,13 +7,9 @@ import PageWrapper from "../_components/PageWrapper";
 import prisma from "@/prisma/db";
 
 const UsersPage = async () => {
-  const getData = async (): Promise<User[]> => {
-    return await prisma.user.findMany();
-  };
-
   let data;
   try {
-    data = await getData();
+    data = await prisma.user.findMany();
   } catch (error) {
     return "Failed to load users from the database";
   }
