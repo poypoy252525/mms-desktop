@@ -8,13 +8,11 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { Death } from "@prisma/client";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import DateRangePicker from "./DateRangePicker";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import axios, { AxiosError } from "axios";
-import { z } from "zod";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import DateRangePicker from "./DateRangePicker";
 
 const chartDat = [
   {
@@ -55,7 +53,6 @@ const DeathAreaChart = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("hello");
       if (!selectedDate) return;
       try {
         const { data: noOfDeathByDate } = await axios.post<SchemaType[]>(

@@ -33,11 +33,10 @@ const DateRangePicker = ({ className, onChangeDate }: Props) => {
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            size="sm"
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[250px] justify-start text-left font-normal",
+              "justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
