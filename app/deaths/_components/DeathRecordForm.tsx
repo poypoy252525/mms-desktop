@@ -26,6 +26,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
       causeOfDeath: "",
       dateOfBirth: new Date(),
       dateOfDeath: new Date(),
+      age: -1,
       firstName: "",
       lastName: "",
       nextOfKinContact: "",
@@ -76,13 +77,25 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
                 placeholder="last name..."
               />
             </div>
-            <div>
-              <CustomFormInput
-                control={form.control}
-                name="causeOfDeath"
-                label="Cause of death"
-                placeholder="Cause of death..."
-              />
+            <div className="grid grid-cols-12">
+              <div className="col-span-4">
+                <CustomFormInput
+                  control={form.control}
+                  name="age"
+                  label="Age"
+                  placeholder="Age..."
+                  type="number"
+                  valueType="number"
+                />
+              </div>
+              <div className="col-span-8">
+                <CustomFormInput
+                  control={form.control}
+                  name="causeOfDeath"
+                  label="Cause of death"
+                  placeholder="Cause of death..."
+                />
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <BirthDatePicker form={form} />

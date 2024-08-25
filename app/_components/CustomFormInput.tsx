@@ -17,6 +17,7 @@ interface Props<T extends FieldValues> {
   description?: string;
   placeholder?: string;
   type?: string;
+  valueType?: string;
 }
 
 const CustomFormInput = <T extends FieldValues>({
@@ -26,6 +27,7 @@ const CustomFormInput = <T extends FieldValues>({
   description,
   placeholder,
   type = "text",
+  valueType = "string",
 }: Props<T>) => {
   return (
     <FormField
@@ -35,7 +37,18 @@ const CustomFormInput = <T extends FieldValues>({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type={type} placeholder={placeholder} {...field} />
+            <Input
+              type={type}
+              placeholder={placeholder}
+              {...field}
+              onChange={({ target }) => {
+                const value =
+                  type === "number" && valueType === "number"
+                    ? Number(target.value)
+                    : target.value;
+                field.onChange(value);
+              }}
+            />
           </FormControl>
           <FormDescription>{description}</FormDescription>
           <FormMessage />

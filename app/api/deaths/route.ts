@@ -29,6 +29,7 @@ export const POST = async (request: NextRequest) => {
     data: {
       firstName: death.firstName,
       lastName: death.lastName,
+      age: death.age,
       causeOfDeath: death.causeOfDeath,
       dateOfBirth: death.dateOfBirth,
       dateOfDeath: death.dateOfDeath,

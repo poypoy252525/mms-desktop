@@ -3,6 +3,7 @@ import { z } from "zod";
 export const newDeathSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
+  age: z.number().min(0),
   dateOfBirth: z.date(),
   dateOfDeath: z.date(),
   causeOfDeath: z.string().min(1),

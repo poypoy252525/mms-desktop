@@ -1,15 +1,12 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import CustomBarChart from "./_components/CustomBarChart";
 import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
+import prisma from "@/prisma/db";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const deaths = await prisma.death.findMany({});
+
   return (
     <PageWrapper>
       <PageHeading>Dashboard</PageHeading>
@@ -26,14 +23,12 @@ const HomePage = () => {
         <div className="col-span-7">
           <Card>
             <CardHeader>
-              <div className="">
-                <h3 className="font-semibold leading-none tracking-tight">
-                  Some title
-                </h3>
-              </div>
+              <h3 className="font-semibold leading-none tracking-tight">
+                Death records
+              </h3>
             </CardHeader>
             <CardContent>
-              <CustomBarChart />
+              <CustomBarChart chartData={deaths} />
             </CardContent>
           </Card>
         </div>
