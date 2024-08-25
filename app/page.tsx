@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Users, UserX } from "lucide-react";
+import { Receipt, Users, UserX } from "lucide-react";
 import DeathAreaChart from "./_components/DeathAreaChart";
 import InformationCard, { BriefInfo } from "./_components/InformationCard";
 import PageHeading from "./_components/PageHeading";
@@ -14,27 +14,27 @@ import PageWrapper from "./_components/PageWrapper";
 const briefInfos: BriefInfo[] = [
   {
     title: "Total Users",
-    description: "+12 users last month",
+    description: "+8% users last month",
     icon: <Users className="w-4 h-4 text-muted-foreground" />,
-    value: "100 Users",
+    value: "+3,219",
   },
   {
     title: "Total Deaths",
-    description: "+12 users last month",
+    description: "+2% new records last month",
     icon: <UserX className="w-4 h-4 text-muted-foreground" />,
-    value: "120 Deaths",
+    value: "+120",
+  },
+  {
+    title: "Paid bills",
+    description: "+10% bill last month",
+    icon: <Receipt className="w-4 h-4 text-muted-foreground" />,
+    value: "+32,201",
   },
   {
     title: "Total Users",
     description: "+12 users last month",
     icon: <Users className="w-4 h-4 text-muted-foreground" />,
-    value: "100 Users",
-  },
-  {
-    title: "Total Users",
-    description: "+12 users last month",
-    icon: <Users className="w-4 h-4 text-muted-foreground" />,
-    value: "100 Users",
+    value: "100",
   },
 ];
 
