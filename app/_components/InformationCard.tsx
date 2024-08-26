@@ -11,7 +11,7 @@ export interface BriefInfo {
 
 const InformationCard = ({ description, title, value, icon }: BriefInfo) => {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <div className="flex justify-between">
           <h3 className="text-sm font-medium tracking-tight">{title}</h3>

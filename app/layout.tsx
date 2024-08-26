@@ -22,18 +22,24 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <MobileNotSupportedPage>
-          <div className="grid lg:grid-cols-[280px_1fr]">
-            <div>
-              <Sidebar />
+          {false ? (
+            <div className="grid lg:grid-cols-[280px_1fr]">
+              <div>
+                <Sidebar />
+              </div>
+              <div>
+                <Navbar />
+                <div className="h-[60px] w-full"></div>
+                <main className="flex-1 p-6">
+                  <div className="container max-w-screen-lg">{children}</div>
+                </main>
+              </div>
             </div>
-            <div>
-              <Navbar />
-              <div className="h-[60px] w-full"></div>
-              <main className="flex-1 p-6">
-                <div className="container max-w-screen-lg">{children}</div>
-              </main>
+          ) : (
+            <div className="flex justify-center items-center w-full h-screen">
+              {children}
             </div>
-          </div>
+          )}
           <Toaster />
         </MobileNotSupportedPage>
       </body>
