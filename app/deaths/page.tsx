@@ -15,8 +15,7 @@ import { DataTable } from "../_components/DataTable";
 import PageWrapper from "../_components/PageWrapper";
 import { columns } from "./_components/Columns";
 import FilterRecordDropdown from "./_components/FilterRecordDropdown";
-
-export type FilterDateType = "TODAY" | "MONTH" | "WEEK" | "";
+import { FilterDateType, isFilterDateType } from "../utilities/functions";
 
 interface Props {
   searchParams: {
@@ -53,12 +52,6 @@ const filterByDate = (
       break;
   }
   return { from, to };
-};
-
-export const isFilterDateType = (value: string): boolean => {
-  const statuses: FilterDateType[] = ["TODAY", "MONTH", "WEEK", ""];
-  if (statuses.includes(value as FilterDateType) && value !== "") return true;
-  return false;
 };
 
 const DeathsPage = async ({ searchParams }: Props) => {
@@ -107,7 +100,7 @@ const DeathsPage = async ({ searchParams }: Props) => {
           <Card className="mt-2">
             <CardHeader>
               <CardTitle>Deaths</CardTitle>
-              <CardDescription>All death records as of today</CardDescription>
+              <CardDescription>All death records</CardDescription>
             </CardHeader>
             <CardContent>
               <DataTable
