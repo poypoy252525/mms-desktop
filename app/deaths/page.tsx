@@ -1,11 +1,4 @@
-import React, { useEffect } from "react";
-import PageHeading from "../_components/PageHeading";
-import { DataTable } from "../_components/DataTable";
-import { columns } from "./_components/Columns";
-import { Death } from "@prisma/client";
-import PageWrapper from "../_components/PageWrapper";
-import prisma from "@/prisma/db";
-import Actions from "./_components/Actions";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,8 +7,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ListFilter } from "lucide-react";
+import prisma from "@/prisma/db";
+import { Death } from "@prisma/client";
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
+import { DataTable } from "../_components/DataTable";
+import PageWrapper from "../_components/PageWrapper";
+import { columns } from "./_components/Columns";
+import FilterRecordDropdown from "./_components/FilterRecordDropdown";
 
 const DeathsPage = async () => {
   const getData = async (): Promise<Death[]> => {
@@ -31,38 +30,41 @@ const DeathsPage = async () => {
 
   return (
     <PageWrapper>
-      <Tabs defaultValue="today" className="w-full">
+      <Tabs defaultValue="all" className="w-full">
         <div className="flex items-center justify-between">
           <TabsList>
-            <TabsTrigger value="today">Today</TabsTrigger>
-            <TabsTrigger value="weekly">Week</TabsTrigger>
-            <TabsTrigger value="allTime">All time</TabsTrigger>
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="active">Active</TabsTrigger>
+            <TabsTrigger value="archived">Archived</TabsTrigger>
           </TabsList>
           <div className="flex space-x-4">
-            <Button size="sm" variant="outline">
-              <ListFilter className="w-4 h-4 mr-2" />
-              Filter
-            </Button>
+            <FilterRecordDropdown />
+            <Link href="/deaths/new">
+              <Button size="sm">
+                <CirclePlus className="w-4 h-4 mr-2" />
+                Add Record
+              </Button>
+            </Link>
           </div>
         </div>
-        <TabsContent value="today">
-          <Card>
+
+        <TabsContent value="all">
+          <Card className="mt-2">
             <CardHeader>
               <CardTitle>Deaths</CardTitle>
-              <CardDescription>Manage the deaths record</CardDescription>
+              <CardDescription>All death records as of today</CardDescription>
             </CardHeader>
             <CardContent>
               <DataTable
                 filterColumn="firstName"
                 columns={columns}
                 data={data}
-                // actions={<Actions />}
               />
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="weekly">weekly record</TabsContent>
-        <TabsContent value="allTime">All time records</TabsContent>
+        <TabsContent value="active">Active records</TabsContent>
+        <TabsContent value="archived">Archived records</TabsContent>
       </Tabs>
     </PageWrapper>
   );
