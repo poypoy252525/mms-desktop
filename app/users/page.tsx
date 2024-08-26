@@ -1,10 +1,8 @@
-import axios from "axios";
-import PageHeading from "../_components/PageHeading";
-import { DataTable } from "../_components/DataTable";
-import { columns } from "./_components/Columns";
-import { User } from "@prisma/client";
-import PageWrapper from "../_components/PageWrapper";
 import prisma from "@/prisma/db";
+import { DataTable } from "../_components/DataTable";
+import PageHeading from "../_components/PageHeading";
+import PageWrapper from "../_components/PageWrapper";
+import { columns } from "./_components/Columns";
 
 const UsersPage = async () => {
   let data;
