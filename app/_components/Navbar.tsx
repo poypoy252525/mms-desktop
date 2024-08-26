@@ -13,8 +13,8 @@ import React from "react";
 const Navbar = () => {
   return (
     <>
-      <div className="h-[60px] border-b bg-white w-auto fixed right-0 left-[280px]">
-        <div className="flex items-center justify-between w-full h-[60px] bg-muted/40 px-4">
+      <div className="h-[60px] w-auto fixed right-0 left-[280px]">
+        <div className="flex items-center justify-between w-full h-[60px] bg-white border-b px-4">
           <div></div>
           <DropdownMenu>
             <DropdownMenuTrigger>

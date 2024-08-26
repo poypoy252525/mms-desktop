@@ -20,9 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className + " bg-muted/40"}>
         <MobileNotSupportedPage>
-          {false ? (
+          {true ? (
             <div className="grid lg:grid-cols-[280px_1fr]">
               <div>
                 <Sidebar />
