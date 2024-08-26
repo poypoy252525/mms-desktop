@@ -16,6 +16,7 @@ import PageWrapper from "../_components/PageWrapper";
 import { columns } from "./_components/Columns";
 import FilterRecordDropdown from "./_components/FilterRecordDropdown";
 import { FilterDateType, isFilterDateType } from "../utilities/functions";
+import DeathRecordCard from "./_components/DeathRecordCard";
 
 interface Props {
   searchParams: {
@@ -63,8 +64,6 @@ const DeathsPage = async ({ searchParams }: Props) => {
 
   const { from, to } = filterByDate(filterBy);
 
-  console.log(from, to, filterBy);
-
   const deaths = await prisma.death.findMany({
     where: {
       status,
@@ -97,22 +96,18 @@ const DeathsPage = async ({ searchParams }: Props) => {
           </div>
         </div>
         <TabsContent value="all">
-          <Card className="mt-2">
-            <CardHeader>
-              <CardTitle>Deaths</CardTitle>
-              <CardDescription>All death records</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DataTable
-                filterColumn="firstName"
-                columns={columns}
-                data={deaths}
-              />
-            </CardContent>
-          </Card>
+          <DeathRecordCard deaths={deaths} />
         </TabsContent>
-        <TabsContent value="active">Active records</TabsContent>
-        <TabsContent value="archived">Archived records</TabsContent>
+        <TabsContent value="active">
+          <DeathRecordCard
+            deaths={deaths.filter((death) => death.status === "ACTIVE")}
+          />
+        </TabsContent>
+        <TabsContent value="archived">
+          <DeathRecordCard
+            deaths={deaths.filter((death) => death.status === "INACTIVE")}
+          />
+        </TabsContent>
       </Tabs>
     </PageWrapper>
   );
