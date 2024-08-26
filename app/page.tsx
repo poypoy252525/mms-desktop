@@ -44,7 +44,7 @@ const HomePage = async () => {
       <PageHeading>Dashboard</PageHeading>
       <div className="grid grid-cols-12 gap-4">
         {briefInfos.map((item, index) => (
-          <div key={index} className="col-span-3">
+          <div key={index} className=" lg:col-span-6 xl:col-span-3">
             <InformationCard
               description={item.description}
               icon={item.icon}
