@@ -11,7 +11,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
   });
 
   const currentDeath = burial?.deaths.find(
-    (death) => death.status === "PRESENT"
+    (death) => death.status === "ACTIVE"
   );
 
   return (
@@ -34,7 +34,9 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
       <h2 className="text-lg font-semibold">History</h2>
       <DataTable
         columns={columns}
-        data={burial?.deaths.filter((death) => death.status === "PAST") || []}
+        data={
+          burial?.deaths.filter((death) => death.status === "INACTIVE") || []
+        }
         filterColumn="firstName"
       />
     </PageWrapper>

@@ -12,15 +12,10 @@ const DeathCard = async ({
   burial: Burial & { deaths: Death[] };
 }) => {
   const { deaths } = burial;
-  const currentDeath = deaths.find((death) => death.status === "PRESENT");
+  const currentDeath = deaths.find((death) => death.status === "ACTIVE");
   return (
     <Card className="h-full">
       <CardHeader className="p-4">
-        {/* <img
-          src="https://picsum.photos/200"
-          className="w-full h-full pb-1"
-          alt="profile_image"
-        /> */}
         <CardTitle className="text-lg">
           {`${burial.block} - ${burial.row + burial.plotNumber}`}
         </CardTitle>

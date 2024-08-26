@@ -6,17 +6,21 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ListFilter } from "lucide-react";
+import { FilterDateType, isFilterDateType } from "../page";
+import { useRouter } from "next/navigation";
 
-const FilterRecordDropdown = () => {
-  const [position, setPosition] = React.useState("all");
-
+const FilterRecordDropdown = ({
+  defaultValue,
+}: {
+  defaultValue: FilterDateType;
+}) => {
+  const router = useRouter();
+  const [position, setPosition] = React.useState<FilterDateType>(defaultValue);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,14 +30,25 @@ const FilterRecordDropdown = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="today">Today</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="weekly">
-            This week
+        <DropdownMenuRadioGroup
+          value={position}
+          onValueChange={(value) => {
+            if (isFilterDateType(value) && value !== "") {
+              setPosition(value as FilterDateType);
+              router.push(`/deaths?filterBy=${value}`);
+            } else {
+              setPosition("");
+              router.push(`/deaths`);
+            }
+          }}
+        >
+          <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="TODAY">Today</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="WEEK">
+            Last 7 days
           </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="monthly">
-            This month
+          <DropdownMenuRadioItem value="MONTH">
+            Last 30 days
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>

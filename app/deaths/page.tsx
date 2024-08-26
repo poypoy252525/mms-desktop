@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/prisma/db";
-import { Death } from "@prisma/client";
+import { Death, Status } from "@prisma/client";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
 import { DataTable } from "../_components/DataTable";
@@ -16,17 +16,71 @@ import PageWrapper from "../_components/PageWrapper";
 import { columns } from "./_components/Columns";
 import FilterRecordDropdown from "./_components/FilterRecordDropdown";
 
-const DeathsPage = async () => {
-  const getData = async (): Promise<Death[]> => {
-    return await prisma.death.findMany({});
-  };
+export type FilterDateType = "TODAY" | "MONTH" | "WEEK" | "";
 
-  let data;
-  try {
-    data = await getData();
-  } catch (error) {
-    return "Failed to fetch data from database (death collection)";
+interface Props {
+  searchParams: {
+    status: Status;
+    filterBy: FilterDateType;
+  };
+}
+
+const filterByDate = (
+  filterType: FilterDateType
+): { from: Date | undefined; to: Date | undefined } => {
+  let from = undefined;
+  let to = undefined;
+  switch (filterType) {
+    case "TODAY":
+      from = new Date();
+      to = new Date();
+      from.setHours(0, 0, 0, 0);
+      to.setHours(23, 59, 59, 999);
+      break;
+    case "WEEK":
+      from = new Date();
+      to = new Date();
+      from.setDate(from.getDate() - 7);
+      from.setHours(0, 0, 0, 0);
+      to.setHours(23, 59, 59, 999);
+      break;
+    case "MONTH":
+      from = new Date();
+      to = new Date();
+      from.setMonth(from.getMonth() - 1);
+      from.setHours(0, 0, 0, 0);
+      to.setHours(23, 59, 59, 999);
+      break;
   }
+  return { from, to };
+};
+
+export const isFilterDateType = (value: string): boolean => {
+  const statuses: FilterDateType[] = ["TODAY", "MONTH", "WEEK", ""];
+  if (statuses.includes(value as FilterDateType) && value !== "") return true;
+  return false;
+};
+
+const DeathsPage = async ({ searchParams }: Props) => {
+  const { filterBy } = searchParams;
+  const statuses = Object.values(Status);
+  const status = statuses.includes(searchParams.status)
+    ? searchParams.status
+    : undefined;
+
+  const { from, to } = filterByDate(filterBy);
+
+  console.log(from, to, filterBy);
+
+  const deaths = await prisma.death.findMany({
+    where: {
+      status,
+      dateOfDeath: {
+        gte: from,
+        lte: to,
+      },
+    },
+  });
 
   return (
     <PageWrapper>
@@ -38,7 +92,9 @@ const DeathsPage = async () => {
             <TabsTrigger value="archived">Archived</TabsTrigger>
           </TabsList>
           <div className="flex space-x-4">
-            <FilterRecordDropdown />
+            <FilterRecordDropdown
+              defaultValue={isFilterDateType(filterBy) ? filterBy : ""}
+            />
             <Link href="/deaths/new">
               <Button size="sm">
                 <CirclePlus className="w-4 h-4 mr-2" />
@@ -47,7 +103,6 @@ const DeathsPage = async () => {
             </Link>
           </div>
         </div>
-
         <TabsContent value="all">
           <Card className="mt-2">
             <CardHeader>
@@ -58,7 +113,7 @@ const DeathsPage = async () => {
               <DataTable
                 filterColumn="firstName"
                 columns={columns}
-                data={data}
+                data={deaths}
               />
             </CardContent>
           </Card>

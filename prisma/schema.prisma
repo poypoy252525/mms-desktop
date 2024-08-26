@@ -27,14 +27,14 @@ model Death {
   nextOfKinName         String
   nextOfKinRelationship String
   nextOfKinContact      String
-  status                Status    @default(PRESENT)
+  status                Status    @default(ACTIVE)
   burial                Burial    @relation(fields: [burialId], references: [id])
   burialId              String    @db.ObjectId
 }
 
 enum Status {
-  PRESENT
-  PAST
+  ACTIVE
+  INACTIVE
 }
 
 model Burial {
