@@ -30,7 +30,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="h-screen lg:w-[280px] border-r bg-white fixed">
+    <div className="h-screen lg:w-[280px] border-r bg-background fixed">
       <header className="flex items-center justify-between h-[60px] w-full border-b lg:px-6">
         <Link href="/" className="flex gap-3 transition-all font-semibold">
           <BrickWall />

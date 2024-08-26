@@ -8,14 +8,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings, User } from "lucide-react";
-import React from "react";
+import ThemeToggler from "./ThemeToggler";
 
 const Navbar = () => {
   return (
     <>
       <div className="h-[60px] w-auto fixed right-0 left-[280px]">
-        <div className="flex items-center justify-between w-full h-[60px] bg-white border-b px-4">
-          <div></div>
+        <div className="flex items-center justify-between w-full h-[60px] bg-background border-b px-4">
+          <div>
+            <ThemeToggler />
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
