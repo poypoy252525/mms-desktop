@@ -96,16 +96,24 @@ const DeathsPage = async ({ searchParams }: Props) => {
           </div>
         </div>
         <TabsContent value="all">
-          <DeathRecordCard deaths={deaths} />
+          <DeathRecordCard
+            title="Deaths"
+            deaths={deaths}
+            description="All records of the deaths"
+          />
         </TabsContent>
         <TabsContent value="active">
           <DeathRecordCard
+            title="Currently Buried"
             deaths={deaths.filter((death) => death.status === "ACTIVE")}
+            description="Only active records (currently buried)"
           />
         </TabsContent>
         <TabsContent value="archived">
           <DeathRecordCard
+            title="Inactive"
             deaths={deaths.filter((death) => death.status === "INACTIVE")}
+            description="Only inactive records (removed from burial)"
           />
         </TabsContent>
       </Tabs>
