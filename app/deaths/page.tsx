@@ -17,6 +17,8 @@ import { columns } from "./_components/Columns";
 import FilterRecordDropdown from "./_components/FilterRecordDropdown";
 import { FilterDateType, isFilterDateType } from "../utilities/functions";
 import DeathRecordCard from "./_components/DeathRecordCard";
+import Breadcrumbs from "../_components/Breadcrumbs";
+import { BreadcrumbData } from "../utilities/breadcrumb";
 
 interface Props {
   searchParams: {
@@ -55,6 +57,11 @@ const filterByDate = (
   return { from, to };
 };
 
+const breadcrumbItems: BreadcrumbData[] = [
+  { label: "Home", link: "/" },
+  { label: "Deaths", link: "/deaths" },
+];
+
 const DeathsPage = async ({ searchParams }: Props) => {
   const { filterBy } = searchParams;
   const statuses = Object.values(Status);
@@ -76,6 +83,7 @@ const DeathsPage = async ({ searchParams }: Props) => {
 
   return (
     <PageWrapper>
+      <Breadcrumbs data={breadcrumbItems} />
       <Tabs defaultValue="all" className="w-full">
         <div className="flex items-center justify-between">
           <TabsList>

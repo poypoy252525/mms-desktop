@@ -1,7 +1,7 @@
-import PageHeading from "@/app/_components/PageHeading";
 import PageWrapper from "@/app/_components/PageWrapper";
 import prisma from "@/prisma/db";
 import DeathRecordForm from "../_components/DeathRecordForm";
+import Breadcrumbs from "../../_components/Breadcrumbs";
 
 const CreateDeathRecord = async () => {
   const burials = await prisma.burial.findMany({
@@ -12,7 +12,13 @@ const CreateDeathRecord = async () => {
 
   return (
     <PageWrapper>
-      <PageHeading>New Record</PageHeading>
+      <Breadcrumbs
+        data={[
+          { label: "Home", link: "/" },
+          { label: "Deaths", link: "/deaths" },
+          { label: "New", link: "/deaths/new" },
+        ]}
+      />
       <DeathRecordForm burials={burials} />
     </PageWrapper>
   );

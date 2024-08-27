@@ -17,6 +17,8 @@ import { toast, useToast } from "@/components/ui/use-toast";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
+import PageHeading from "@/app/_components/PageHeading";
+import { ChevronLeft } from "lucide-react";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -65,23 +67,39 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
-        <div className="grid grid-cols-12 gap-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              className="w-7 h-7 mr-2"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+            <PageHeading>Create new record</PageHeading>
+          </div>
+          <div className="space-x-4">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => router.push("/deaths")}
+            >
+              Cancel
+            </Button>
+            <Button size="sm" type="submit">
+              Add Record
+            </Button>
+          </div>
+        </div>
+        <div className="grid grid-cols-12 gap-4 mt-4">
           <div className="col-span-8 space-y-4">
             <ClientDetailsCard form={form} />
             <NextOfKinDetailsCard form={form} />
           </div>
           <div className="col-span-4">
             <div className="flex flex-col space-y-4 items-end">
-              <div className="space-x-4 self-end">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => router.push("/deaths")}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">Add Record</Button>
-              </div>
               <div className="w-full">
                 <StatusCard form={form} />
               </div>

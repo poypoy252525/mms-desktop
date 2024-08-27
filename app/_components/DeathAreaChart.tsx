@@ -80,7 +80,14 @@ const DeathAreaChart = () => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-          <AreaChart accessibilityLayer data={chartData}>
+          <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="date"
@@ -89,7 +96,6 @@ const DeathAreaChart = () => {
               axisLine={false}
               tickFormatter={(value) => dateFormatter(value)}
             />
-            <YAxis tickLine={false} tickMargin={10} />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent />}
