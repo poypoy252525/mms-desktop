@@ -57,7 +57,7 @@ const ClientDetailsCard = ({
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 mt-2">
           <BirthDatePicker form={form} />
           <DeathDatePicker form={form} />
         </div>

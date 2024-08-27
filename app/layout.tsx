@@ -6,6 +6,7 @@ import Navbar from "./_components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import MobileNotSupportedPage from "./MobileNotSupportedPage";
 import ThemeProvider from "./ThemeProvider";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,34 +23,38 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + " bg-muted/40"}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <MobileNotSupportedPage>
-            {true ? (
-              <div className="grid lg:grid-cols-[280px_1fr]">
-                <div>
-                  <Sidebar />
+        <ScrollArea className="w-screen h-screen">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <MobileNotSupportedPage>
+              {true ? (
+                <div className="grid lg:grid-cols-[280px_1fr]">
+                  <div>
+                    <Sidebar />
+                  </div>
+                  <div>
+                    <Navbar />
+                    <div className="h-[60px] w-full"></div>
+                    <main className="flex-1 p-6">
+                      <div className="container max-w-screen-lg">
+                        {children}
+                      </div>
+                    </main>
+                  </div>
                 </div>
-                <div>
-                  <Navbar />
-                  <div className="h-[60px] w-full"></div>
-                  <main className="flex-1 p-6">
-                    <div className="container max-w-screen-lg">{children}</div>
-                  </main>
+              ) : (
+                <div className="flex justify-center items-center w-full h-screen">
+                  {children}
                 </div>
-              </div>
-            ) : (
-              <div className="flex justify-center items-center w-full h-screen">
-                {children}
-              </div>
-            )}
-            <Toaster />
-          </MobileNotSupportedPage>
-        </ThemeProvider>
+              )}
+              <Toaster />
+            </MobileNotSupportedPage>
+          </ThemeProvider>
+        </ScrollArea>
       </body>
     </html>
   );
