@@ -6,21 +6,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import prisma from "@/prisma/db";
-import { Death, Status } from "@prisma/client";
-import { CirclePlus } from "lucide-react";
+import { Status } from "@prisma/client";
+import { CirclePlus, Filter, ListFilter } from "lucide-react";
 import Link from "next/link";
-import { DataTable } from "../_components/DataTable";
-import PageWrapper from "../_components/PageWrapper";
-import { columns } from "./_components/Columns";
-import FilterRecordDropdown from "./_components/FilterRecordDropdown";
-import { FilterDateType, isFilterDateType } from "../utilities/functions";
-import DeathRecordCard from "./_components/DeathRecordCard";
 import Breadcrumbs from "../_components/Breadcrumbs";
+import PageWrapper from "../_components/PageWrapper";
 import { BreadcrumbData } from "../utilities/breadcrumb";
-import { Suspense } from "react";
+import { FilterDateType } from "../utilities/functions";
 import LoadingDeathPage from "./_components/LoadingDeathPage";
+import { Input } from "@/components/ui/input";
 
 interface Props {
   searchParams: {
@@ -64,25 +60,7 @@ const breadcrumbItems: BreadcrumbData[] = [
   { label: "Deaths", link: "/deaths" },
 ];
 
-const DeathsPage = async ({ searchParams }: Props) => {
-  const { filterBy } = searchParams;
-  const statuses = Object.values(Status);
-  const status = statuses.includes(searchParams.status)
-    ? searchParams.status
-    : undefined;
-
-  const { from, to } = filterByDate(filterBy);
-
-  const deaths = await prisma.death.findMany({
-    where: {
-      status,
-      dateOfDeath: {
-        gte: from,
-        lte: to,
-      },
-    },
-  });
-
+const DeathsPage = async () => {
   return (
     <PageWrapper>
       <Breadcrumbs data={breadcrumbItems} />
@@ -94,9 +72,10 @@ const DeathsPage = async ({ searchParams }: Props) => {
             <TabsTrigger value="archived">Archived</TabsTrigger>
           </TabsList>
           <div className="flex space-x-4">
-            <FilterRecordDropdown
-              defaultValue={isFilterDateType(filterBy) ? filterBy : ""}
-            />
+            <Button size="sm" variant="outline">
+              <ListFilter className="w-4 h-4 mr-2" />
+              Filter
+            </Button>
             <Link href="/deaths/new">
               <Button size="sm">
                 <CirclePlus className="w-4 h-4 mr-2" />
@@ -105,27 +84,21 @@ const DeathsPage = async ({ searchParams }: Props) => {
             </Link>
           </div>
         </div>
-
         <TabsContent value="all">
-          <DeathRecordCard
-            title="Deaths"
-            deaths={deaths}
-            description="All records of the deaths"
-          />
-        </TabsContent>
-        <TabsContent value="active">
-          <DeathRecordCard
-            title="Currently Buried"
-            deaths={deaths.filter((death) => death.status === "ACTIVE")}
-            description="Only active records (currently buried)"
-          />
-        </TabsContent>
-        <TabsContent value="archived">
-          <DeathRecordCard
-            title="Inactive"
-            deaths={deaths.filter((death) => death.status === "INACTIVE")}
-            description="Only inactive records (removed from burial)"
-          />
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <Skeleton className="w-[120px] h-[20px]" />
+              </CardTitle>
+              <CardDescription>
+                <Skeleton className="w-[200px] h-[16px]" />
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Input className="w-[300px] my-2" />
+              <LoadingDeathPage />
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </PageWrapper>
