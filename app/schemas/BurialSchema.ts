@@ -6,9 +6,11 @@ export const burialSchema = z.object({
   plotNumber: z.string().min(1),
 });
 
+export type BurialSchemaType = z.infer<typeof burialSchema>;
+
 export const burialVacantSchema = z.object({
   isVacant: z.boolean(),
   burialId: z.string(),
 });
 
-export type burialVacantSchemaType = z.infer<typeof burialVacantSchema>;
+export type BurialVacantSchemaType = z.infer<typeof burialVacantSchema>;

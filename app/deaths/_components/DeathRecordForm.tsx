@@ -1,25 +1,21 @@
 "use client";
+import PageHeading from "@/app/_components/PageHeading";
+import { BurialVacantSchemaType } from "@/app/schemas/BurialSchema";
 import { newDeathSchema } from "@/app/schemas/NewDeathSchema";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Burial } from "@prisma/client";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import CustomFormInput from "../../_components/CustomFormInput";
-import BirthDatePicker from "../_components/BirthDatePicker";
 import BurialPickerCard from "../_components/BurialPickerCard";
-import DeathDatePicker from "../_components/DeathDatePicker";
-import axios, { AxiosError } from "axios";
-import { burialVacantSchemaType } from "@/app/schemas/BurialSchema";
-import { Burial, Death } from "@prisma/client";
-import { toast, useToast } from "@/components/ui/use-toast";
+import BackButtom from "./BackButtom";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
-import PageHeading from "@/app/_components/PageHeading";
-import { ChevronLeft } from "lucide-react";
-import BackButtom from "./BackButtom";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -46,7 +42,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   const onSubmit = async (data: newDeathSchemaType) => {
     try {
       await axios.post<newDeathSchemaType>("/api/deaths", data);
-      await axios.patch<burialVacantSchemaType>("/api/burials", {
+      await axios.patch<BurialVacantSchemaType>("/api/burials", {
         isVacant: false,
         burialId: data.burialId,
       });
@@ -67,7 +63,11 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
+      <div>
+        <form
+          id="deathForm"
+          onSubmit={form.handleSubmit((data) => onSubmit(data))}
+        />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <BackButtom />
@@ -82,7 +82,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
             >
               Cancel
             </Button>
-            <Button size="sm" type="submit">
+            <Button form="deathForm" size="sm" type="submit">
               Add Record
             </Button>
           </div>
@@ -108,7 +108,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </Form>
   );
 };

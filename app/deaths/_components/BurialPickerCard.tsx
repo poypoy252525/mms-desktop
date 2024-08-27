@@ -1,13 +1,21 @@
 "use client";
+import AddBurialForm from "@/app/burials/_components/AddBurialForm";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Burial } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { CirclePlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import CustomFormSelector from "./CustomFormSelector";
 
@@ -72,6 +80,21 @@ const BurialPickerCard = ({ callback, burials }: Props) => {
           />
         </div>
       </CardContent>
+      <CardFooter>
+        <div className="flex items-center justify-center w-full">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button type="button" size="sm" variant="ghost">
+                <CirclePlus className="w-4 h-4 mr-2" />
+                Add burial
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <AddBurialForm />
+            </PopoverContent>
+          </Popover>
+        </div>
+      </CardFooter>
     </Card>
   );
 };
