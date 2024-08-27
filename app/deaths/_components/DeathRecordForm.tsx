@@ -14,6 +14,8 @@ import axios, { AxiosError } from "axios";
 import { burialVacantSchemaType } from "@/app/schemas/BurialSchema";
 import { Burial, Death } from "@prisma/client";
 import { toast, useToast } from "@/components/ui/use-toast";
+import ClientDetailsCard from "./ClientDetailsCard";
+import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -63,67 +65,8 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
       <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-8 space-y-4">
-            <div className="grid grid-cols-2 gap-4 w-full">
-              <CustomFormInput
-                control={form.control}
-                name="firstName"
-                label="First name"
-                placeholder="First name..."
-              />
-              <CustomFormInput
-                control={form.control}
-                name="lastName"
-                label="Last name"
-                placeholder="last name..."
-              />
-            </div>
-            <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-4">
-                <CustomFormInput
-                  control={form.control}
-                  name="age"
-                  label="Age"
-                  placeholder="Age..."
-                  type="number"
-                  valueType="number"
-                />
-              </div>
-              <div className="col-span-8">
-                <CustomFormInput
-                  control={form.control}
-                  name="causeOfDeath"
-                  label="Cause of death"
-                  placeholder="Cause of death..."
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <BirthDatePicker form={form} />
-              <DeathDatePicker form={form} />
-            </div>
-            <div>
-              <CustomFormInput
-                control={form.control}
-                name="nextOfKinName"
-                label="Next of Kin name"
-                placeholder="Next of Kin name..."
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <CustomFormInput
-                control={form.control}
-                name="nextOfKinRelationship"
-                label="Next of Kin relationship"
-                placeholder="Next of Kin relationship..."
-              />
-              <CustomFormInput
-                control={form.control}
-                name="nextOfKinContact"
-                label="Next of Kin contact"
-                placeholder="Next of Kin contact..."
-                type="number"
-              />
-            </div>
+            <ClientDetailsCard form={form} />
+            <NextOfKinDetailsCard form={form} />
           </div>
           <div className="col-span-4">
             <div className="flex flex-col space-y-4 items-end">

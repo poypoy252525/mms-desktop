@@ -6,14 +6,24 @@ import React, { useEffect, useState } from "react";
 
 const ThemeToggler = () => {
   const { setTheme, theme } = useTheme();
+  const [myTheme, setMyTheme] = useState<string>();
+  useEffect(() => {
+    setMyTheme(theme);
+  }, [theme]);
 
   return (
     <Button
       size="icon"
       variant="outline"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => {
+        setTheme(theme === "dark" ? "light" : "dark");
+      }}
     >
-      <Sun className="w-4 h-4" />
+      {myTheme === "light" ? (
+        <Sun className="w-4 h-4" />
+      ) : (
+        <Moon className="w-4 h-4" />
+      )}
     </Button>
   );
 };
