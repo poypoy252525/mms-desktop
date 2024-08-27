@@ -24,7 +24,7 @@ const BurialsPage = async () => {
         </Link>
       </div>
       {burials.length ? (
-        <div className="grid grid-cols-6 gap-4">
+        <div className="grid lg:grid-cols-4 xl:grid-cols-6 gap-4">
           {burials.map((burial) => (
             <Link key={burial.id} href={`/burials/${burial.id}`}>
               <DeathCard burial={burial} />
