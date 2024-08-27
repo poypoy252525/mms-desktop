@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { UseFormClearErrors, UseFormReturn } from "react-hook-form";
 import { newDeathSchemaType } from "./DeathRecordForm";
-import BirthDatePicker from "./DeathDatePicker";
+import BirthDatePicker from "./BirthDatePicker";
 import DeathDatePicker from "./DeathDatePicker";
 
 const ClientDetailsCard = ({

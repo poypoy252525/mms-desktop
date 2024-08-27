@@ -16,6 +16,7 @@ import { Burial, Death } from "@prisma/client";
 import { toast, useToast } from "@/components/ui/use-toast";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
+import StatusCard from "./StatusCard";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -28,13 +29,14 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
       causeOfDeath: "",
       dateOfBirth: new Date(),
       dateOfDeath: new Date(),
-      age: -1,
+      age: 0,
       firstName: "",
       lastName: "",
       nextOfKinContact: "",
       nextOfKinName: "",
       nextOfKinRelationship: "",
       burialId: "",
+      status: "ACTIVE",
     },
   });
 
@@ -80,7 +82,10 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
                 </Button>
                 <Button type="submit">Add Record</Button>
               </div>
-              <div className="flex w-full">
+              <div className="w-full">
+                <StatusCard form={form} />
+              </div>
+              <div className="w-full">
                 <BurialPickerCard
                   burials={burials}
                   callback={(burial) => {

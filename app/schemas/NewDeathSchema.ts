@@ -11,4 +11,5 @@ export const newDeathSchema = z.object({
   nextOfKinRelationship: z.string().min(2),
   nextOfKinContact: z.string().min(11, "Contact number must contain 11 digits"),
   burialId: z.string().min(5),
+  status: z.string().optional(),
 });
