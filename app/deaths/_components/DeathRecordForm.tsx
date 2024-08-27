@@ -19,6 +19,7 @@ import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
 import PageHeading from "@/app/_components/PageHeading";
 import { ChevronLeft } from "lucide-react";
+import BackButtom from "./BackButtom";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -69,14 +70,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
       <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Button
-              type="button"
-              size="icon"
-              variant="outline"
-              className="w-7 h-7 mr-2"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
+            <BackButtom />
             <PageHeading>Create new record</PageHeading>
           </div>
           <div className="space-x-4">
