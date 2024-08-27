@@ -59,62 +59,75 @@ const AddBurialForm = () => {
           }
         })}
       />
-      <FormField
-        name="block"
-        control={form.control}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Block</FormLabel>
-            <FormControl>
-              <Input placeholder="Block (building)" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        name="row"
-        control={form.control}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Row</FormLabel>
-            <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select row" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Rows</SelectLabel>
-                    <SelectItem value="A">A (First row)</SelectItem>
-                    <SelectItem value="B">B (Second row)</SelectItem>
-                    <SelectItem value="C">C (Third row)</SelectItem>
-                    <SelectItem value="D">D (Fourth row)</SelectItem>
-                    <SelectItem value="E">E (Fifth row)</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        name="plotNumber"
-        control={form.control}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Plot number</FormLabel>
-            <FormControl>
-              <Input placeholder="Plot number (cell of building)" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <Button type="submit" form="burialForm" formTarget="burialForm">
-        Add
-      </Button>
+      <div className="flex flex-col space-y-2">
+        <FormField
+          name="block"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Block</FormLabel>
+              <FormControl>
+                <Input placeholder="Block (building)" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="row"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Row</FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select row" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Rows</SelectLabel>
+                      <SelectItem value="A">A (First row)</SelectItem>
+                      <SelectItem value="B">B (Second row)</SelectItem>
+                      <SelectItem value="C">C (Third row)</SelectItem>
+                      <SelectItem value="D">D (Fourth row)</SelectItem>
+                      <SelectItem value="E">E (Fifth row)</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="plotNumber"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Plot number</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Plot number (cell of building)"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+          size="sm"
+          type="submit"
+          form="burialForm"
+          formTarget="burialForm"
+        >
+          Add
+        </Button>
+      </div>
     </Form>
   );
 };
