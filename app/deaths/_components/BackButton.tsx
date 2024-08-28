@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
-const BackButtom = () => {
+const BackButton = () => {
   const path = usePathname();
   const router = useRouter();
 
@@ -30,4 +30,4 @@ const BackButtom = () => {
   );
 };
 
-export default BackButtom;
+export default BackButton;

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import BurialPickerCard from "../_components/BurialPickerCard";
-import BackButtom from "./BackButtom";
+import BackButton from "./BackButton";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
@@ -70,7 +70,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
         />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <BackButtom />
+            <BackButton />
             <PageHeading>Create new record</PageHeading>
           </div>
           <div className="space-x-4">
