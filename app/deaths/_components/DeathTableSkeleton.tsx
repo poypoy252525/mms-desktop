@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const LoadingDeathPage = () => {
+const DeathTableSkeleton = () => {
   return (
     <Table>
       <TableHeader>
@@ -46,4 +46,4 @@ const LoadingDeathPage = () => {
   );
 };
 
-export default LoadingDeathPage;
+export default DeathTableSkeleton;

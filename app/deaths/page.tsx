@@ -1,26 +1,15 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/prisma/db";
-import { Death, Status } from "@prisma/client";
+import { Status } from "@prisma/client";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
-import { DataTable } from "../_components/DataTable";
+import Breadcrumbs from "../_components/Breadcrumbs";
 import PageWrapper from "../_components/PageWrapper";
-import { columns } from "./_components/Columns";
-import FilterRecordDropdown from "./_components/FilterRecordDropdown";
+import { BreadcrumbData } from "../utilities/breadcrumb";
 import { FilterDateType, isFilterDateType } from "../utilities/functions";
 import DeathRecordCard from "./_components/DeathRecordCard";
-import Breadcrumbs from "../_components/Breadcrumbs";
-import { BreadcrumbData } from "../utilities/breadcrumb";
-import { Suspense } from "react";
-import LoadingDeathPage from "./_components/LoadingDeathPage";
+import FilterRecordDropdown from "./_components/FilterRecordDropdown";
 
 interface Props {
   searchParams: {
@@ -105,7 +94,6 @@ const DeathsPage = async ({ searchParams }: Props) => {
             </Link>
           </div>
         </div>
-
         <TabsContent value="all">
           <DeathRecordCard
             title="Deaths"

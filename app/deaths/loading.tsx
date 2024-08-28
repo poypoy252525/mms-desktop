@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,62 +7,19 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Status } from "@prisma/client";
-import { CirclePlus, Filter, ListFilter } from "lucide-react";
-import Link from "next/link";
-import Breadcrumbs from "../_components/Breadcrumbs";
 import PageWrapper from "../_components/PageWrapper";
 import { BreadcrumbData } from "../utilities/breadcrumb";
-import { FilterDateType } from "../utilities/functions";
-import LoadingDeathPage from "./_components/LoadingDeathPage";
-import { Input } from "@/components/ui/input";
-
-interface Props {
-  searchParams: {
-    status: Status;
-    filterBy: FilterDateType;
-  };
-}
-
-const filterByDate = (
-  filterType: FilterDateType
-): { from: Date | undefined; to: Date | undefined } => {
-  let from = undefined;
-  let to = undefined;
-  switch (filterType) {
-    case "TODAY":
-      from = new Date();
-      to = new Date();
-      from.setHours(0, 0, 0, 0);
-      to.setHours(23, 59, 59, 999);
-      break;
-    case "WEEK":
-      from = new Date();
-      to = new Date();
-      from.setDate(from.getDate() - 7);
-      from.setHours(0, 0, 0, 0);
-      to.setHours(23, 59, 59, 999);
-      break;
-    case "MONTH":
-      from = new Date();
-      to = new Date();
-      from.setMonth(from.getMonth() - 1);
-      from.setHours(0, 0, 0, 0);
-      to.setHours(23, 59, 59, 999);
-      break;
-  }
-  return { from, to };
-};
+import DeathTableSkeleton from "./_components/DeathTableSkeleton";
 
 const breadcrumbItems: BreadcrumbData[] = [
   { label: "Home", link: "/" },
   { label: "Deaths", link: "/deaths" },
 ];
 
-const DeathsPage = async () => {
+const Loading = async () => {
   return (
     <PageWrapper>
-      <Breadcrumbs data={breadcrumbItems} />
+      <Skeleton className="w-[200px] h-[16px]" />
       <Tabs defaultValue="all" className="w-full">
         <div className="flex items-center justify-between">
           <TabsList>
@@ -72,16 +28,8 @@ const DeathsPage = async () => {
             <TabsTrigger value="archived">Archived</TabsTrigger>
           </TabsList>
           <div className="flex space-x-4">
-            <Button size="sm" variant="outline">
-              <ListFilter className="w-4 h-4 mr-2" />
-              Filter
-            </Button>
-            <Link href="/deaths/new">
-              <Button size="sm">
-                <CirclePlus className="w-4 h-4 mr-2" />
-                Add Record
-              </Button>
-            </Link>
+            <Skeleton className="h-8 rounded-md px-3 w-16" />
+            <Skeleton className="h-8 rounded-md px-3 w-20" />
           </div>
         </div>
         <TabsContent value="all">
@@ -95,8 +43,8 @@ const DeathsPage = async () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Input className="w-[300px] my-2" />
-              <LoadingDeathPage />
+              <Skeleton className="w-[300px] my-2 h-10" />
+              <DeathTableSkeleton />
             </CardContent>
           </Card>
         </TabsContent>
@@ -105,6 +53,4 @@ const DeathsPage = async () => {
   );
 };
 
-export const dynamic = "force-dynamic";
-
-export default DeathsPage;
+export default Loading;

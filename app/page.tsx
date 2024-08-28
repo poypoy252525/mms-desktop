@@ -10,6 +10,7 @@ import DeathAreaChart from "./_components/DeathAreaChart";
 import InformationCard, { BriefInfo } from "./_components/InformationCard";
 import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
+import { Suspense } from "react";
 
 const briefInfos: BriefInfo[] = [
   {
@@ -42,30 +43,32 @@ const HomePage = async () => {
   return (
     <PageWrapper>
       <PageHeading>Dashboard</PageHeading>
-      <div className="grid grid-cols-12 gap-4">
-        {briefInfos.map((item, index) => (
-          <div key={index} className=" lg:col-span-6 xl:col-span-3">
-            <InformationCard
-              description={item.description}
-              icon={item.icon}
-              title={item.title}
-              value={item.value}
-            />
+      <Suspense fallback={<p>loading...</p>}>
+        <div className="grid grid-cols-12 gap-4">
+          {briefInfos.map((item, index) => (
+            <div key={index} className=" lg:col-span-6 xl:col-span-3">
+              <InformationCard
+                description={item.description}
+                icon={item.icon}
+                title={item.title}
+                value={item.value}
+              />
+            </div>
+          ))}
+          <div className="col-span-7">
+            <DeathAreaChart />
           </div>
-        ))}
-        <div className="col-span-7">
-          <DeathAreaChart />
+          <div className="col-span-5">
+            <Card>
+              <CardHeader>
+                <CardTitle>Stats</CardTitle>
+                <CardDescription>Lorem ipsum dolor sit amet.</CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card>
+          </div>
         </div>
-        <div className="col-span-5">
-          <Card>
-            <CardHeader>
-              <CardTitle>Stats</CardTitle>
-              <CardDescription>Lorem ipsum dolor sit amet.</CardDescription>
-            </CardHeader>
-            <CardContent></CardContent>
-          </Card>
-        </div>
-      </div>
+      </Suspense>
     </PageWrapper>
   );
 };
