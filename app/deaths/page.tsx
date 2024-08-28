@@ -10,7 +10,6 @@ import { BreadcrumbData } from "../utilities/breadcrumb";
 import { FilterDateType, isFilterDateType } from "../utilities/functions";
 import DeathRecordCard from "./_components/DeathRecordCard";
 import FilterRecordDropdown from "./_components/FilterRecordDropdown";
-import delay from "delay";
 
 interface Props {
   searchParams: {
@@ -72,8 +71,6 @@ const DeathsPage = async ({ searchParams }: Props) => {
       },
     },
   });
-
-  await delay(2000);
 
   return (
     <PageWrapper>

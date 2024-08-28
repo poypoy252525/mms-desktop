@@ -1,11 +1,10 @@
-import React from "react";
-import PageWrapper from "../_components/PageWrapper";
-import PageHeading from "../_components/PageHeading";
-import prisma from "@/prisma/db";
-import DeathCard from "./_components/DeathCard";
 import { Button } from "@/components/ui/button";
+import prisma from "@/prisma/db";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import PageHeading from "../_components/PageHeading";
+import PageWrapper from "../_components/PageWrapper";
+import DeathCard from "./_components/DeathCard";
 
 const BurialsPage = async () => {
   const burials = await prisma.burial.findMany({
