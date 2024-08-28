@@ -1,13 +1,12 @@
+import Breadcrumbs from "@/app/_components/Breadcrumbs";
 import PageHeading from "@/app/_components/PageHeading";
 import PageWrapper from "@/app/_components/PageWrapper";
-import prisma from "@/prisma/db";
-import BackButton from "../_components/BackButton";
-import Breadcrumbs from "@/app/_components/Breadcrumbs";
 import { BreadcrumbData } from "@/app/utilities/breadcrumb";
-import { Death } from "@prisma/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
+import prisma from "@/prisma/db";
+import { Death } from "@prisma/client";
+import delay from "delay";
+import BackButton from "../_components/BackButton";
 import DeathOverviewCard from "../_components/DeathOverviewCard";
 import DeathRelativeCard from "../_components/DeathRelativeCard";
 
@@ -42,6 +41,8 @@ const DeathRecordPage = async ({ params }: { params: { id: string } }) => {
   if (!death) return null;
 
   const { burial } = death;
+
+  await delay(2000);
 
   return (
     <PageWrapper>
