@@ -42,8 +42,6 @@ const DeathRecordPage = async ({ params }: { params: { id: string } }) => {
 
   const { burial } = death;
 
-  await delay(2000);
-
   return (
     <PageWrapper>
       <Breadcrumbs data={getBreadcrumbsData(death)} />
