@@ -3,15 +3,17 @@
 import { Death } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import ColumnDefActions from "./ColumnDefActions";
+import Link from "next/link";
 
 export const columns: ColumnDef<Death>[] = [
   {
-    accessorKey: "firstName",
-    header: "First name",
-  },
-  {
-    accessorKey: "lastName",
-    header: "Last name",
+    id: "name",
+    header: "Name",
+    cell: ({ row: { original: death } }) => (
+      <Link href={`/deaths/${death.id}`}>
+        <p>{`${death.firstName} ${death.lastName}`}</p>
+      </Link>
+    ),
   },
   {
     accessorKey: "causeOfDeath",

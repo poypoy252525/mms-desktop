@@ -13,7 +13,7 @@ import ThemeToggler from "./ThemeToggler";
 const Navbar = () => {
   return (
     <>
-      <div className="h-[60px] w-auto fixed right-0 left-[280px]">
+      <div className="h-[60px] w-auto fixed right-0 lg:left-[230px] xl:left-[280px]">
         <div className="flex items-center justify-between w-full h-[60px] bg-background border-b px-4">
           <div>
             <ThemeToggler />

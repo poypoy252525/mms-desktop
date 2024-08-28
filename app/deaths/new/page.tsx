@@ -16,7 +16,7 @@ const CreateDeathRecord = async () => {
         data={[
           { label: "Home", link: "/" },
           { label: "Deaths", link: "/deaths" },
-          { label: "New", link: "/deaths/new" },
+          { label: "Create new record", link: "/deaths/new" },
         ]}
       />
       <DeathRecordForm burials={burials} />
