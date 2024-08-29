@@ -16,12 +16,15 @@ import BackButtom from "./BackButton";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
 const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   const { toast } = useToast();
   const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
   const form = useForm<newDeathSchemaType>({
     resolver: zodResolver(newDeathSchema),
     defaultValues: {
@@ -40,6 +43,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   });
 
   const onSubmit = async (data: newDeathSchemaType) => {
+    setLoading(true);
     try {
       await axios.post<newDeathSchemaType>("/api/deaths", data);
       await axios.patch<BurialVacantSchemaType>("/api/burials", {
@@ -59,6 +63,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
         variant: "destructive",
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -82,7 +87,13 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
             >
               Cancel
             </Button>
-            <Button form="deathForm" size="sm" type="submit">
+            <Button
+              form="deathForm"
+              size="sm"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               Add Record
             </Button>
           </div>

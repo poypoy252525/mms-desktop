@@ -40,7 +40,7 @@ const DeathRecordPage = async ({ params }: { params: { id: string } }) => {
     console.log(error);
   }
 
-  if (!death) return null;
+  if (!death) return <>No data.</>;
 
   const { burial } = death;
 

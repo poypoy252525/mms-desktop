@@ -1,12 +1,12 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Sidebar from "./_components/Sidebar";
 import Navbar from "./_components/Navbar";
-import { Toaster } from "@/components/ui/toaster";
+import Sidebar from "./_components/Sidebar";
+import "./globals.css";
 import MobileNotSupportedPage from "./MobileNotSupportedPage";
 import ThemeProvider from "./ThemeProvider";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const inter = Inter({ subsets: ["latin"] });
 
