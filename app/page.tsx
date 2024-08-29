@@ -1,12 +1,10 @@
-import { Receipt, UserCheck, UserRoundMinus, Users, UserX } from "lucide-react";
-import { Suspense } from "react";
+import prisma from "@/prisma/db";
+import { UserCheck, UserRoundMinus, Users, UserX } from "lucide-react";
 import DeathAreaChart from "./_components/DeathAreaChart";
 import InformationCard, { BriefInfo } from "./_components/InformationCard";
 import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
 import RecentDataCard from "./_components/RecentDataCard";
-import prisma from "@/prisma/db";
-import delay from "delay";
 
 const HomePage = async () => {
   const numberOfUser = await prisma.user.count();
@@ -43,8 +41,6 @@ const HomePage = async () => {
       value: `+${numberOfInactive}`,
     },
   ];
-
-  await delay(2000);
 
   return (
     <PageWrapper>
