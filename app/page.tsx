@@ -1,16 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Receipt, Users, UserX } from "lucide-react";
+import { Suspense } from "react";
 import DeathAreaChart from "./_components/DeathAreaChart";
 import InformationCard, { BriefInfo } from "./_components/InformationCard";
 import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
-import { Suspense } from "react";
+import RecentDataCard from "./_components/RecentDataCard";
 
 const briefInfos: BriefInfo[] = [
   {
@@ -59,13 +53,7 @@ const HomePage = async () => {
             <DeathAreaChart />
           </div>
           <div className="col-span-5">
-            <Card>
-              <CardHeader>
-                <CardTitle>Stats</CardTitle>
-                <CardDescription>Lorem ipsum dolor sit amet.</CardDescription>
-              </CardHeader>
-              <CardContent></CardContent>
-            </Card>
+            <RecentDataCard />
           </div>
         </div>
       </Suspense>
