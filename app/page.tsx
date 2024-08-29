@@ -1,39 +1,48 @@
-import { Receipt, Users, UserX } from "lucide-react";
+import { Receipt, UserCheck, UserRoundMinus, Users, UserX } from "lucide-react";
 import { Suspense } from "react";
 import DeathAreaChart from "./_components/DeathAreaChart";
 import InformationCard, { BriefInfo } from "./_components/InformationCard";
 import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
 import RecentDataCard from "./_components/RecentDataCard";
-
-const briefInfos: BriefInfo[] = [
-  {
-    title: "Total Users",
-    description: "+8% users last month",
-    icon: <Users className="w-4 h-4 text-muted-foreground" />,
-    value: "+3,219",
-  },
-  {
-    title: "Total Deaths",
-    description: "+2% new records last month",
-    icon: <UserX className="w-4 h-4 text-muted-foreground" />,
-    value: "+120",
-  },
-  {
-    title: "Paid bills",
-    description: "+10% bill last month",
-    icon: <Receipt className="w-4 h-4 text-muted-foreground" />,
-    value: "+32,201",
-  },
-  {
-    title: "Total Users",
-    description: "+12 users last month",
-    icon: <Users className="w-4 h-4 text-muted-foreground" />,
-    value: "100",
-  },
-];
+import prisma from "@/prisma/db";
 
 const HomePage = async () => {
+  const numberOfUser = await prisma.user.count();
+  const numberOfDeath = await prisma.death.count();
+  const numberOfActive = await prisma.death.count({
+    where: { status: "ACTIVE" },
+  });
+  const numberOfInactive = await prisma.death.count({
+    where: { status: "INACTIVE" },
+  });
+  const briefInfos: BriefInfo[] = [
+    {
+      title: "Total Users",
+      description: "overall amount of users",
+      icon: <Users className="w-4 h-4 text-muted-foreground" />,
+      value: `+${numberOfUser}`,
+    },
+    {
+      title: "Total Deaths",
+      description: "overall amount of death record",
+      icon: <UserX className="w-4 h-4 text-muted-foreground" />,
+      value: `+${numberOfDeath}`,
+    },
+    {
+      title: "Active",
+      description: "numbers of currently buried",
+      icon: <UserCheck className="w-4 h-4 text-muted-foreground" />,
+      value: `+${numberOfActive}`,
+    },
+    {
+      title: "Inactive",
+      description: "number of out of burials",
+      icon: <UserRoundMinus className="w-4 h-4 text-muted-foreground" />,
+      value: `+${numberOfInactive}`,
+    },
+  ];
+
   return (
     <PageWrapper>
       <PageHeading>Dashboard</PageHeading>

@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 
 export interface BriefInfo {
   title: string;
-  value: string;
+  value: string | number;
   description: string;
   icon: ReactNode;
 }
