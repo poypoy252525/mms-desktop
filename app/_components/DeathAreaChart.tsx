@@ -59,7 +59,6 @@ const DeathAreaChart = () => {
           `/api/deaths/date-by-deaths`,
           selectedDate
         );
-        console.log(noOfDeathByDate);
         setChartData(noOfDeathByDate);
       } catch (error) {
         if (error instanceof AxiosError) console.log(error.response?.data);
