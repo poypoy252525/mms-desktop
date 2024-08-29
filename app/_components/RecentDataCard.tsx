@@ -14,7 +14,7 @@ import Link from "next/link";
 const RecentDataCard = async () => {
   const latestRecords = await prisma.death.findMany({
     orderBy: {
-      dateCreated: "asc",
+      dateCreated: "desc",
     },
     take: 5,
   });
