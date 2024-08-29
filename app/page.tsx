@@ -6,6 +6,7 @@ import PageHeading from "./_components/PageHeading";
 import PageWrapper from "./_components/PageWrapper";
 import RecentDataCard from "./_components/RecentDataCard";
 import prisma from "@/prisma/db";
+import delay from "delay";
 
 const HomePage = async () => {
   const numberOfUser = await prisma.user.count();
@@ -43,29 +44,29 @@ const HomePage = async () => {
     },
   ];
 
+  await delay(2000);
+
   return (
     <PageWrapper>
       <PageHeading>Dashboard</PageHeading>
-      <Suspense fallback={<p>loading...</p>}>
-        <div className="grid grid-cols-12 gap-4">
-          {briefInfos.map((item, index) => (
-            <div key={index} className=" lg:col-span-6 xl:col-span-3">
-              <InformationCard
-                description={item.description}
-                icon={item.icon}
-                title={item.title}
-                value={item.value}
-              />
-            </div>
-          ))}
-          <div className="col-span-7">
-            <DeathAreaChart />
+      <div className="grid grid-cols-12 gap-4">
+        {briefInfos.map((item, index) => (
+          <div key={index} className=" lg:col-span-6 xl:col-span-3">
+            <InformationCard
+              description={item.description}
+              icon={item.icon}
+              title={item.title}
+              value={item.value}
+            />
           </div>
-          <div className="col-span-5">
-            <RecentDataCard />
-          </div>
+        ))}
+        <div className="col-span-7">
+          <DeathAreaChart />
         </div>
-      </Suspense>
+        <div className="col-span-5">
+          <RecentDataCard />
+        </div>
+      </div>
     </PageWrapper>
   );
 };
