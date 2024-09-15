@@ -17,7 +17,7 @@ const MobileNotSupportedPage = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  if (isMobile) return "Mobile devices or small screen not supported";
+  if (isMobile) return "Mobile devices or small screens are not supported";
 
   return children;
 };
