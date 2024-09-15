@@ -18,6 +18,8 @@ interface Props<T extends FieldValues> {
   placeholder?: string;
   type?: string;
   valueType?: string;
+  maxLength?: number;
+  max?: number;
 }
 
 const CustomFormInput = <T extends FieldValues>({
@@ -28,6 +30,8 @@ const CustomFormInput = <T extends FieldValues>({
   placeholder,
   type = "text",
   valueType = "string",
+  max,
+  maxLength,
 }: Props<T>) => {
   return (
     <FormField
@@ -38,6 +42,8 @@ const CustomFormInput = <T extends FieldValues>({
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input
+              maxLength={maxLength}
+              max={max}
               type={type}
               placeholder={placeholder}
               {...field}

@@ -44,6 +44,7 @@ const NextOfKinDetailsCard = ({
             label="Next of Kin contact"
             placeholder="Next of Kin contact..."
             type="number"
+            max={10}
           />
         </div>
       </CardContent>

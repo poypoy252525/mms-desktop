@@ -55,6 +55,7 @@ export function DataTable<TData, TValue>({
     onPaginationChange: setPagination,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
+
     state: {
       sorting,
       pagination,
@@ -68,9 +69,9 @@ export function DataTable<TData, TValue>({
         <Input
           placeholder={`Filter...`}
           // value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => {
+            table.getColumn(filterColumn)?.setFilterValue(event.target.value);
+          }}
           className="max-w-sm"
         />
         {actions}
