@@ -46,7 +46,9 @@ const ColumnDefActions = ({ death }: { death: Death }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem>View details</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push(`/deaths/${death.id}`)}>
+          View details
+        </DropdownMenuItem>
         <DropdownMenuItem>Edit details</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Remove from burial</DropdownMenuItem>

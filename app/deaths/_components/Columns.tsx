@@ -1,11 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Death } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import ColumnDefActions from "./ColumnDefActions";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import ColumnDefActions from "./ColumnDefActions";
 
 export const columns: ColumnDef<Death>[] = [
   {
