@@ -5,12 +5,13 @@ import { BreadcrumbData } from "@/app/utilities/breadcrumb";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/prisma/db";
 import { Death } from "@prisma/client";
-import BackButton from "../_components/BackButton";
+import BackButton from "../../_components/BackButton";
 import DeathOverviewCard from "../_components/DeathOverviewCard";
 import DeathRelativeCard from "../_components/DeathRelativeCard";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import DeleteDialog from "../_components/DeleteDialog";
+import EditButton from "./EditButton";
 
 const getBreadcrumbsData = (death: Death): BreadcrumbData[] => {
   const breadcrumbsData: BreadcrumbData[] = [
@@ -64,10 +65,7 @@ const DeathRecordPage = async ({ params }: { params: { id: string } }) => {
           </TabsList>
           <div className="flex space-x-4">
             <DeleteDialog death={death} />
-            <Button size="sm" variant="outline">
-              <Pencil className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
+            <EditButton id={death.id} />
           </div>
         </div>
         <TabsContent value="overview">

@@ -1,6 +1,6 @@
 import PageWrapper from "@/app/_components/PageWrapper";
 import { Skeleton } from "@/components/ui/skeleton";
-import BackButton from "../_components/BackButton";
+import BackButton from "../../_components/BackButton";
 
 const Loading = async () => {
   return (

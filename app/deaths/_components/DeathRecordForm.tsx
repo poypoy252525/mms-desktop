@@ -12,12 +12,13 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import BurialPickerCard from "../_components/BurialPickerCard";
-import BackButtom from "./BackButton";
+import BackButton from "../../_components/BackButton";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import PageHeaderWithBack from "@/app/_components/PageHeaderWithBack";
 
 export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
@@ -74,10 +75,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
           onSubmit={form.handleSubmit((data) => onSubmit(data))}
         />
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <BackButtom />
-            <PageHeading>Create new record</PageHeading>
-          </div>
+          <PageHeaderWithBack title="Create new record" />
           <div className="space-x-4">
             <Button
               type="button"

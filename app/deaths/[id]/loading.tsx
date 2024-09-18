@@ -1,7 +1,7 @@
 import PageWrapper from "@/app/_components/PageWrapper";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import BackButton from "../_components/BackButton";
+import BackButton from "../../_components/BackButton";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

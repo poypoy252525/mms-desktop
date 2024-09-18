@@ -16,13 +16,14 @@ const BackButton = () => {
       onClick={() => {
         const arrayPath = path.split("/");
         arrayPath.splice(arrayPath.length - 1);
-        let previousPath = "";
-        let i = 0;
-        while (i < arrayPath.length) {
-          previousPath = previousPath + arrayPath[i];
-          i++;
-        }
-        router.push("/" + previousPath);
+
+        const previousPath = arrayPath.join("/");
+
+        console.log(previousPath);
+
+        router.push(
+          previousPath.startsWith("/") ? previousPath : "/" + previousPath
+        );
       }}
     >
       <ChevronLeft className="w-4 h-4" />
