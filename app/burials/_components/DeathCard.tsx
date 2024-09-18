@@ -19,7 +19,7 @@ const DeathCard = async ({
         <CardTitle className="text-lg">
           {`${burial.block} - ${burial.row + burial.plotNumber}`}
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="truncate">
           {currentDeath
             ? `${currentDeath?.firstName} ${currentDeath?.lastName}`
             : "Vacant"}
