@@ -56,7 +56,7 @@ export const columns: ColumnDef<User>[] = [
     ),
     cell: ({ row: { original: death } }) => (
       <p>
-        {new Date(death.createdAt).toLocaleDateString("en-US", {
+        {new Date(death.dateCreated).toLocaleDateString("en-US", {
           month: "long",
           day: "numeric",
           year: "numeric",

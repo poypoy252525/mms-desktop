@@ -21,7 +21,7 @@ const EditPage = ({ params }: { params: { id: string } }) => {
       if (death) setDeath(death);
     };
     fetch();
-  }, []);
+  }, [params.id]);
 
   const breadcrumbsItems: BreadcrumbData[] = [
     { label: "Home", link: "/" },

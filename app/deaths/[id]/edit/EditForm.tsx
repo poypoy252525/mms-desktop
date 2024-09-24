@@ -1,17 +1,13 @@
 "use client";
+import { newDeathSchemaType } from "@/app/schemas/DeathSchemas";
 import { Form } from "@/components/ui/form";
-import React, { MutableRefObject, RefObject, useRef } from "react";
-import ClientDetailsCard from "../../_components/ClientDetailsCard";
-import { useForm } from "react-hook-form";
-import StatusCard from "../../_components/StatusCard";
-import useStore from "@/app/utilities/store";
 import { Death } from "@prisma/client";
-import NextOfKinDetailsCard from "../../_components/NextOfKinDetailsCard";
 import axios from "axios";
-import {
-  newDeathSchemaType,
-  updateDeathSchemaType,
-} from "@/app/schemas/DeathSchemas";
+import { RefObject } from "react";
+import { useForm } from "react-hook-form";
+import ClientDetailsCard from "../../_components/ClientDetailsCard";
+import NextOfKinDetailsCard from "../../_components/NextOfKinDetailsCard";
+import StatusCard from "../../_components/StatusCard";
 
 interface Props {
   death: Death;
@@ -22,7 +18,6 @@ const EditForm = ({ death, formRef }: Props) => {
   const form = useForm<newDeathSchemaType>({
     defaultValues: {
       ...death,
-      dateUpdated: undefined,
     },
   });
 

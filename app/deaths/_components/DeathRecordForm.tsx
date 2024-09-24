@@ -1,5 +1,5 @@
 "use client";
-import PageHeading from "@/app/_components/PageHeading";
+import PageHeaderWithBack from "@/app/_components/PageHeaderWithBack";
 import { BurialVacantSchemaType } from "@/app/schemas/BurialSchema";
 import { newDeathSchema, newDeathSchemaType } from "@/app/schemas/DeathSchemas";
 import { Button } from "@/components/ui/button";
@@ -8,17 +8,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Burial } from "@prisma/client";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import BurialPickerCard from "../_components/BurialPickerCard";
-import BackButton from "../../_components/BackButton";
 import ClientDetailsCard from "./ClientDetailsCard";
 import NextOfKinDetailsCard from "./NextOfKinDetailsCard";
 import StatusCard from "./StatusCard";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import PageHeaderWithBack from "@/app/_components/PageHeaderWithBack";
 
 const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   const { toast } = useToast();

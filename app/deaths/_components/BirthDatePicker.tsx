@@ -17,7 +17,7 @@ import { UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-import { newDeathSchemaType } from "./DeathRecordForm";
+import { newDeathSchemaType } from "@/app/schemas/DeathSchemas";
 
 const BirthDatePicker = ({
   form,

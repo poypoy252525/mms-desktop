@@ -1,10 +1,10 @@
+import { newDeathSchemaType } from "@/app/schemas/DeathSchemas";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  FormDescription,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -14,9 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Link } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
-import { newDeathSchemaType } from "./DeathRecordForm";
 
 const StatusCard = ({ form }: { form: UseFormReturn<newDeathSchemaType> }) => {
   return (
