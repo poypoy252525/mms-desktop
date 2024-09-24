@@ -1,4 +1,4 @@
-import { newDeathSchema } from "@/app/schemas/NewDeathSchema";
+import { newDeathSchema } from "@/app/schemas/DeathSchemas";
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 

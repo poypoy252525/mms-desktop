@@ -1,7 +1,7 @@
 "use client";
 import PageHeading from "@/app/_components/PageHeading";
 import { BurialVacantSchemaType } from "@/app/schemas/BurialSchema";
-import { newDeathSchema } from "@/app/schemas/NewDeathSchema";
+import { newDeathSchema, newDeathSchemaType } from "@/app/schemas/DeathSchemas";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
@@ -19,8 +19,6 @@ import StatusCard from "./StatusCard";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import PageHeaderWithBack from "@/app/_components/PageHeaderWithBack";
-
-export type newDeathSchemaType = z.infer<typeof newDeathSchema>;
 
 const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
   const { toast } = useToast();
@@ -47,6 +45,7 @@ const DeathRecordForm = ({ burials }: { burials: Burial[] }) => {
     setLoading(true);
     try {
       await axios.post<newDeathSchemaType>("/api/deaths", data);
+      // console.log(data);
       await axios.patch<BurialVacantSchemaType>("/api/burials", {
         isVacant: false,
         burialId: data.burialId,

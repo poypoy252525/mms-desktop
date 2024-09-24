@@ -20,6 +20,7 @@ interface Props<T extends FieldValues> {
   valueType?: string;
   maxLength?: number;
   max?: number;
+  defaultValue?: string | number;
 }
 
 const CustomFormInput = <T extends FieldValues>({
@@ -32,6 +33,7 @@ const CustomFormInput = <T extends FieldValues>({
   valueType = "string",
   max,
   maxLength,
+  defaultValue,
 }: Props<T>) => {
   return (
     <FormField
@@ -46,6 +48,7 @@ const CustomFormInput = <T extends FieldValues>({
               max={max}
               type={type}
               placeholder={placeholder}
+              defaultValue={defaultValue}
               {...field}
               onChange={({ target }) => {
                 const value =

@@ -13,3 +13,5 @@ export const newDeathSchema = z.object({
   burialId: z.string().min(5),
   status: z.string().optional(),
 });
+
+export type newDeathSchemaType = z.infer<typeof newDeathSchema>;

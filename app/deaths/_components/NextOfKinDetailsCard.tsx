@@ -1,6 +1,5 @@
 import CustomFormInput from "@/app/_components/CustomFormInput";
-import { UseFormReturn } from "react-hook-form";
-import { newDeathSchemaType } from "./DeathRecordForm";
+import { newDeathSchemaType } from "@/app/schemas/DeathSchemas";
 import {
   Card,
   CardContent,
@@ -8,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { UseFormReturn } from "react-hook-form";
 
 const NextOfKinDetailsCard = ({
   form,
@@ -44,7 +44,7 @@ const NextOfKinDetailsCard = ({
             label="Next of Kin contact"
             placeholder="Next of Kin contact..."
             type="number"
-            max={10}
+            max={99999999999}
           />
         </div>
       </CardContent>
