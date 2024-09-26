@@ -3,7 +3,13 @@ import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
-  const deaths = await prisma.death.findMany();
+  const searchParams = request.nextUrl.searchParams;
+  const include = JSON.parse(searchParams.get("include")!);
+
+  const deaths = await prisma.death.findMany({
+    where: {},
+    include,
+  });
 
   if (!deaths)
     return NextResponse.json("Failed to get data from the database", {

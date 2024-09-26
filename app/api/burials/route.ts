@@ -42,3 +42,22 @@ export const PATCH = async (request: NextRequest) => {
 
   return NextResponse.json(updated, { status: 200 });
 };
+
+export const GET = async (
+  request: NextRequest,
+  { searchParams }: { searchParams: { deathId: string } }
+) => {
+  const burial = await prisma.burial.findFirst({
+    where: {
+      deaths: {
+        some: {
+          id: searchParams.deathId,
+        },
+      },
+    },
+  });
+
+  if (!burial) return NextResponse.json("Not found", { status: 404 });
+
+  NextResponse.json(burial, { status: 200 });
+};

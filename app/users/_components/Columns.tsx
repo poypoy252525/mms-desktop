@@ -16,14 +16,14 @@ import { User } from "@prisma/client";
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "firstName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          First name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
