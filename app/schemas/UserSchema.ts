@@ -6,6 +6,7 @@ export const userSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   photo: z.string(),
+  pushToken: z.string(),
 });
 
 export type UserSchema = z.infer<typeof userSchema>;

@@ -12,6 +12,8 @@ export const GET = async (request: NextRequest, { params }: Params) => {
     },
     include: {
       visits: true,
+      notifications: true,
+      pushTokens: true,
     },
   });
   return NextResponse.json(user, { status: 200 });

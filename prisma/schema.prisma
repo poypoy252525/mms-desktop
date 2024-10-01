@@ -8,14 +8,24 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  googleId    String
-  dateCreated DateTime @default(now())
-  email       String
-  firstName   String
-  lastName    String
-  photo       String
-  visits      Visit[]
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  googleId      String
+  dateCreated   DateTime       @default(now())
+  email         String
+  firstName     String
+  lastName      String
+  photo         String
+  visits        Visit[]
+  notifications Notification[]
+  pushTokens    PushToken[]
+}
+
+model PushToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String 
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.ObjectId
+  createdAt DateTime @default(now())
 }
 
 model Death {
@@ -58,4 +68,21 @@ model Visit {
   userId  String @db.ObjectId
   death   Death  @relation(fields: [deathId], references: [id])
   deathId String @db.ObjectId
+}
+
+model Notification {
+  id      String           @id @default(auto()) @map("_id") @db.ObjectId
+  user    User             @relation(fields: [userId], references: [id])
+  userId  String           @db.ObjectId
+  type    NotificationType
+  read    Boolean          @default(false)
+  sentAt  DateTime         @default(now())
+  title   String
+  content String
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ERROR
 }
