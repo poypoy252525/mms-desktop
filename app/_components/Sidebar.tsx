@@ -1,21 +1,25 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
-  Bell,
   BrickWall,
   Gauge,
   HeartOff,
   Milestone,
   Users,
+  FilePenLine,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import NotificationPopover from "./NotificationPopover";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const navigations: { label: string; path: string; icon: ReactNode }[] = [
-    { label: "Dashboard", path: "/", icon: <Gauge className="h-4 w-4" /> },
+    {
+      label: "Dashboard",
+      path: "/dashboard",
+      icon: <Gauge className="h-4 w-4" />,
+    },
     { label: "Users", path: "/users", icon: <Users className="h-4 w-4" /> },
     {
       label: "Death records",
@@ -27,6 +31,11 @@ const Sidebar = () => {
       path: "/burials",
       icon: <Milestone className="h-4 w-4" />,
     },
+    {
+      label: "Requests",
+      path: "/requests",
+      icon: <FilePenLine className="h-4 w-4" />,
+    },
   ];
 
   return (
@@ -36,9 +45,7 @@ const Sidebar = () => {
           <BrickWall />
           MMS
         </Link>
-        <Button variant="outline" size="icon" className="h-8 w-8">
-          <Bell className="h-4 w-4" />
-        </Button>
+        <NotificationPopover />
       </header>
       <div className="flex-1">
         <nav className="h-full w-full text-sm font-medium lg:px-4 py-3">
@@ -48,7 +55,7 @@ const Sidebar = () => {
               href={navigation.path}
               className={
                 "flex items-center gap-3 py-2 px-3 rounded-lg hover:text-primary transition-all " +
-                (navigation.path === pathname
+                (pathname.includes(navigation.path)
                   ? "text-primary bg-muted"
                   : "text-muted-foreground")
               }

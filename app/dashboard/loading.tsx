@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import PageHeading from "./_components/PageHeading";
-import PageWrapper from "./_components/PageWrapper";
+import PageHeading from "../_components/PageHeading";
+import PageWrapper from "../_components/PageWrapper";
 
 const Loading = () => {
   return (

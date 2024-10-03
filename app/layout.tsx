@@ -32,18 +32,13 @@ export default function RootLayout({
           >
             <MobileNotSupportedPage>
               {true ? (
-                <div className="grid lg:grid-cols-[230px_1fr] xl:grid-cols-[280px_1fr]">
+                <div className="grid lg:grid-cols-[230px_1fr] xl:grid-cols-[280px_1fr] h-screen">
                   <div>
                     <Sidebar />
                   </div>
-                  <div>
+                  <div className="h-screen max-h-screen flex flex-col">
                     <Navbar />
-                    <div className="h-[60px] w-full"></div>
-                    <main className="flex-1 py-6">
-                      <div className="lg:container max-w-screen-lg">
-                        {children}
-                      </div>
-                    </main>
+                    <main className="flex-1 overflow-hidden">{children}</main>
                   </div>
                 </div>
               ) : (
