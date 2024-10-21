@@ -1,12 +1,5 @@
 "use client";
-import {
-  BrickWall,
-  HeartOff,
-  Home,
-  Milestone,
-  Settings,
-  Users,
-} from "lucide-react";
+import { BrickWall, HeartOff, Home, Milestone, Users } from "lucide-react";
 
 import {
   Sidebar,
