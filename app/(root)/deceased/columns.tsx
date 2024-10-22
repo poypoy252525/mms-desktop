@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
-import { Burial, Deceased, Owner } from "@prisma/client";
+import { Burial, BurialType, Deceased, Owner } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 
@@ -32,27 +32,37 @@ export const columns: ColumnDef<Deceased & { owner: Owner; burial: Burial }>[] =
       },
     },
     {
-      accessorKey: "burial",
-      header: "Burial Type",
+      id: "type",
+      accessorFn: ({ burial }) => burial.type,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Type" />
+      ),
+
       cell: ({ getValue }) => {
-        const burial = getValue() as Burial;
-        return <Badge>{`${getBurialTypeName(burial.type)}`}</Badge>;
+        const burialType = getValue() as BurialType;
+        return <Badge>{`${getBurialTypeName(burialType)}`}</Badge>;
       },
     },
     {
-      accessorKey: "burial",
-      header: "Block",
+      id: "block",
+      accessorFn: ({ burial }) => burial.block,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Block" />
+      ),
       cell: ({ getValue }) => {
-        const burial = getValue() as Burial;
-        return <p>{`${burial.block}`}</p>;
+        const block = getValue() as string;
+        return <p>{`${block}`}</p>;
       },
     },
     {
-      accessorKey: "burial",
-      header: "Lot",
+      id: "row",
+      accessorFn: ({ burial }) => burial.row,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Lot" />
+      ),
       cell: ({ getValue }) => {
-        const burial = getValue() as Burial;
-        return <p>{`${burial.row}`}</p>;
+        const row = getValue() as string;
+        return <p>{`${row}`}</p>;
       },
     },
   ];
