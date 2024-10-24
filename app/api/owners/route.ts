@@ -20,6 +20,11 @@ export const POST = async (request: NextRequest) => {
   owner = await prisma.owner.create({
     data: {
       name: data.name,
+      burial: {
+        connect: {
+          id: data.burialId,
+        },
+      },
     },
   });
 

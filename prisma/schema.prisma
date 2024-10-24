@@ -61,12 +61,12 @@ model Burial {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   block       String
   row         String
-  coordinates Float[]
+  coordinates Json
   isVacant    Boolean    @default(true)
   deceased    Deceased[]
   type        BurialType
-  ownerId     String     @unique @db.ObjectId
-  owner       Owner      @relation(fields: [ownerId], references: [id])
+  ownerId     String?    @db.ObjectId
+  owner       Owner?     @relation(fields: [ownerId], references: [id])
 }
 
 enum BurialType {

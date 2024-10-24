@@ -6,9 +6,9 @@ const burialType = Object.values(BurialType) as [string];
 export const burialSchema = z.object({
   block: z.string(),
   row: z.string(),
-  coordinates: z.array(z.number()),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
   type: z.enum(burialType),
-  ownerId: z.string(),
 });
 
 export type BurialZod = z.infer<typeof burialSchema>;

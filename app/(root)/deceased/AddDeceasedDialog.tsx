@@ -20,8 +20,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Check, ChevronsUpDown } from "lucide-react";
-import * as React from "react";
-
 import {
   Command,
   CommandEmpty,
@@ -43,6 +41,8 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import AddBurialDialog from "@/components/add-burial-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 interface Props {
   owners: Owner[];
@@ -50,6 +50,7 @@ interface Props {
 
 const AddDeceasedDialog = ({ owners }: Props) => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [open, setOpen] = useState<boolean>(false);
   const [ownerId, setOwnerId] = useState<string>("");
@@ -66,10 +67,19 @@ const AddDeceasedDialog = ({ owners }: Props) => {
     try {
       console.log(deceased);
       await axios.post(`/api/deceased`, deceased);
+      toast({
+        title: "Success",
+        description: "The deceased has been created successfully",
+      });
       router.refresh();
       setOpen(false);
     } catch (error) {
       console.error("error creating deceased: ", error);
+      toast({
+        title: "Failed",
+        description: "Failed to create new deceased data.",
+        variant: "destructive",
+      });
       throw error;
     }
   };
@@ -109,10 +119,15 @@ const AddDeceasedDialog = ({ owners }: Props) => {
               <AddOwnerDialog />
             </div>
           </div>
-          <SelectBurial
-            onValueChange={(value) => form.setValue("burialId", value)}
-            ownerId={ownerId}
-          />
+          <div className="flex space-x-2">
+            <SelectBurial
+              onValueChange={(value) => form.setValue("burialId", value)}
+              ownerId={ownerId}
+            />
+            <div className="flex-grow">
+              <AddBurialDialog />
+            </div>
+          </div>
         </Form>
         <DialogFooter>
           <Button variant="secondary" onClick={() => setOpen(false)}>
@@ -139,8 +154,8 @@ const SelectOwner = ({
   onValueChange: (value: string) => void;
   owners: Owner[];
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -218,17 +233,18 @@ const SelectBurial = ({
     fetchBurial();
   }, [ownerId]);
   return (
-    <Select onValueChange={onValueChange}>
+    <Select onValueChange={onValueChange} disabled={!ownerId}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Theme" />
+        <SelectValue placeholder="Plot" />
       </SelectTrigger>
       <SelectContent>
-        {burials.map((burial) => (
-          <SelectItem
-            key={burial.id}
-            value={burial.id}
-          >{`Block ${burial.block} Lot ${burial.row}`}</SelectItem>
-        ))}
+        {ownerId &&
+          burials.map((burial) => (
+            <SelectItem
+              key={burial.id}
+              value={burial.id}
+            >{`Block ${burial.block} Lot ${burial.row}`}</SelectItem>
+          ))}
       </SelectContent>
     </Select>
   );

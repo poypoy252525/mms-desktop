@@ -32,8 +32,14 @@ import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import { getBurialTypeName } from "@/functions/getBurialTypeName";
 
 const AddOwnerDialog = () => {
+  const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<OwnerZod>({
     resolver: zodResolver(ownerSchema),
     defaultValues: {
@@ -46,10 +52,20 @@ const AddOwnerDialog = () => {
 
   const onSubmit = async (owner: OwnerZod) => {
     try {
-      const { data } = await axios.post(`/api/owners`, owner, {});
-      console.log(data);
+      await axios.post(`/api/owners`, owner, {});
+      router.refresh();
+      toast({
+        title: "Success",
+        description: "The Owner data has been created successfully",
+      });
+      setOpen(false);
     } catch (error) {
       console.error("Unable to create new owner from dialog: ", error);
+      toast({
+        title: "Failed",
+        description: "Failed to create new Owner record.",
+        variant: "destructive",
+      });
       throw error;
     }
   };
@@ -128,7 +144,9 @@ const BurialCombobox = ({
           className="w-full justify-between"
         >
           {value
-            ? burials.find((burial) => burial.id === value)?.ownerId
+            ? `Block ${
+                burials.find((burial) => burial.id === value)?.block
+              } Lot ${burials.find((burial) => burial.id === value)?.row}`
             : "Select Plot..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -154,7 +172,9 @@ const BurialCombobox = ({
                       value === burial.id ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {`Block ${burial.block} Lot ${burial.row}`}
+                  {`${getBurialTypeName(burial.type)}: Block ${
+                    burial.block
+                  } Lot ${burial.row}`}
                 </CommandItem>
               ))}
             </CommandGroup>

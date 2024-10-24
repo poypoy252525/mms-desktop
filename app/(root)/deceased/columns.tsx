@@ -75,8 +75,11 @@ export const columns: ColumnDef<Deceased & { owner: Owner; burial: Burial }>[] =
         <DataTableColumnHeader column={column} title="Coordinate" />
       ),
       cell: ({ getValue }) => {
-        const coordinate = getValue() as number[];
-        return <p>{`${coordinate.join(", ")}`}</p>;
+        const coordinate = getValue() as {
+          latitude: number;
+          longitude: number;
+        };
+        return <p>{`${coordinate.latitude}, ${coordinate.longitude}`}</p>;
       },
     },
   ];
