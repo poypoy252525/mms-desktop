@@ -15,17 +15,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Button } from "./ui/button";
-import { Plus } from "lucide-react";
-import { Input } from "./ui/input";
-import { BurialType } from "@prisma/client";
-import { useForm } from "react-hook-form";
-import { BurialZod } from "@/schemas/BurialSchema";
-import { useRef, useState } from "react";
-import { Form } from "./ui/form";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { BurialZod } from "@/schemas/BurialSchema";
+import axios from "axios";
+import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Button } from "./ui/button";
+import { Form } from "./ui/form";
+import { Input } from "./ui/input";
 
 const AddBurialDialog = () => {
   const router = useRouter();
