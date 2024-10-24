@@ -53,7 +53,7 @@ enum Status {
 model Owner {
   id       String     @id @default(auto()) @map("_id") @db.ObjectId
   name     String
-  burial   Burial?
+  burial   Burial[]
   deceased Deceased[]
 }
 
@@ -62,7 +62,7 @@ model Burial {
   block       String
   row         String
   coordinates Float[]
-  isVacant    Boolean    @default(false)
+  isVacant    Boolean    @default(true)
   deceased    Deceased[]
   type        BurialType
   ownerId     String     @unique @db.ObjectId

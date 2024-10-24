@@ -24,11 +24,14 @@ export const columns: ColumnDef<Deceased & { owner: Owner; burial: Burial }>[] =
       },
     },
     {
-      accessorKey: "owner",
-      header: "Owner",
+      id: "owner",
+      accessorFn: ({ owner }) => owner.name,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Owner" />
+      ),
       cell: ({ getValue }) => {
-        const owner = getValue() as Owner;
-        return <p>{owner.name}</p>;
+        const name = getValue() as string;
+        return <p>{name}</p>;
       },
     },
     {
@@ -63,6 +66,17 @@ export const columns: ColumnDef<Deceased & { owner: Owner; burial: Burial }>[] =
       cell: ({ getValue }) => {
         const row = getValue() as string;
         return <p>{`${row}`}</p>;
+      },
+    },
+    {
+      id: "coordinate",
+      accessorFn: ({ burial }) => burial.coordinates,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Coordinate" />
+      ),
+      cell: ({ getValue }) => {
+        const coordinate = getValue() as number[];
+        return <p>{`${coordinate.join(", ")}`}</p>;
       },
     },
   ];

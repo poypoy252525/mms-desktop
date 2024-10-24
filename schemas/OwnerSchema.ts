@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ownerSchema = z.object({
   name: z.string(),
+  burialId: z.string(),
 });
 
-export type ownerZod = z.infer<typeof ownerSchema>;
+export type OwnerZod = z.infer<typeof ownerSchema>;
