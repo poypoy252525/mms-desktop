@@ -5,10 +5,7 @@ import { DataTableColumnHeader } from "@/components/ui/data-table-column-header"
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
 import { Burial, BurialType, Deceased, Owner } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import axios from "axios";
-import { Delete, Trash } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import DeleteDialog from "./DeleteDialog";
 
 export const columns: ColumnDef<Deceased & { owner: Owner; burial: Burial }>[] =

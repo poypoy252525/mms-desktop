@@ -4,7 +4,6 @@ import { BrickWall, HeartOff, Home, Milestone, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
