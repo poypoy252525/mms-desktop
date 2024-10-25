@@ -1,6 +1,8 @@
 import { isValidGoogleIdToken } from "@/functions/googleAuth";
 import prisma from "@/prisma/db";
+import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export const GET = async (
   request: NextRequest,
@@ -21,4 +23,32 @@ export const GET = async (
   });
 
   return NextResponse.json(deceased, { status: 200 });
+};
+
+export const DELETE = async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json("Unauthorized", { status: 401 });
+
+  let deceased = await prisma.deceased.findUnique({
+    where: {
+      id: params.id,
+    },
+  });
+
+  if (!deceased)
+    return NextResponse.json(
+      { message: "No deceased record found" },
+      { status: 404 }
+    );
+
+  await prisma.deceased.delete({
+    where: {
+      id: params.id,
+    },
+  });
+
+  return NextResponse.json({ message: "deleted" }, { status: 200 });
 };

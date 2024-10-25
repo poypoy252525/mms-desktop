@@ -1,8 +1,8 @@
+import { isValidGoogleIdToken } from "@/functions/googleAuth";
 import prisma from "@/prisma/db";
 import { deceasedSchema } from "@/schemas/DeceasedSchema";
-import { NextRequest, NextResponse } from "next/server";
 import { BurialType } from "@prisma/client";
-import { isValidGoogleIdToken } from "@/functions/googleAuth";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
   const body = await request.json();
