@@ -2,22 +2,31 @@
 import React from "react";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Button } from "./ui/button";
-import { Moon } from "lucide-react";
+import { LogOut, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { setTheme, theme } = useTheme();
   return (
-    <header className="flex w-full items-center p-2 sticky top-0 bg-background/75 backdrop-blur-sm">
+    <header className="flex w-full items-center p-2 sticky top-0 bg-background/75 backdrop-blur-sm justify-between">
       <SidebarTrigger />
-      <Button
-        size="icon"
-        variant="ghost"
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        className="ml-auto"
-      >
-        <Moon />
-      </Button>
+      <div className="flex items-center space-x-2">
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          <Moon />
+        </Button>
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={() => signOut({ callbackUrl: "/login" })}
+        >
+          <LogOut />
+        </Button>
+      </div>
     </header>
   );
 };

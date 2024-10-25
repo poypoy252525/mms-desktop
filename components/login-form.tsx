@@ -12,9 +12,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
+import { Form } from "./ui/form";
+import { useForm } from "react-hook-form";
+import { authSchema, AuthZod } from "@/schemas/AuthFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
+import { signIn } from "next-auth/react";
 
 export function LoginForm() {
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const form = useForm<AuthZod>({
+    resolver: zodResolver(authSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
   return (
     <Card className="mx-auto max-w-sm w-full">
       <CardHeader>
@@ -22,33 +38,59 @@ export function LoginForm() {
         <CardDescription>Enter your credentials to proceed</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
-                Forgot your password?
-              </Link>
-            </div>
-            <Input id="password" type="password" required />
-          </div>
-          <Button
-            type="submit"
-            className="w-full"
-            onClick={() => router.push(`/dashboard`)}
+        <Form {...form}>
+          <form
+            ref={formRef}
+            onSubmit={form.handleSubmit(async (data) => {
+              const result = await signIn("credentials", {
+                redirect: false,
+                username: data.username,
+                password: data.password,
+              });
+              if (result?.error)
+                throw new Error("Error login with credentials");
+              router.replace(`/dashboard`);
+            })}
           >
-            Login
-          </Button>
-        </div>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  {...form.register("username")}
+                  id="username"
+                  type="text"
+                  placeholder="username"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    href="#"
+                    className="ml-auto inline-block text-sm underline"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+                <Input
+                  {...form.register("password")}
+                  id="password"
+                  type="password"
+                  placeholder="password"
+                  required
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={() => formRef.current?.requestSubmit()}
+              >
+                Login
+              </Button>
+            </div>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
