@@ -1,12 +1,10 @@
 "use client";
-import DeleteDialog from "@/components/delete-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
 import { Burial, BurialType } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import axios from "axios";
 
 export const columns: ColumnDef<Burial>[] = [
   {
