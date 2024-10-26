@@ -49,9 +49,9 @@ enum Status {
 }
 
 model Owner {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  burials  Burial[]
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  burials Burial[]
 }
 
 model Burial {

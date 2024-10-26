@@ -1,6 +1,7 @@
 "use client";
 import DeleteDialog from "@/components/delete-dialog";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
 import { Burial, BurialType } from "@prisma/client";
@@ -15,7 +16,7 @@ export const columns: ColumnDef<Burial>[] = [
     ),
     cell: ({ getValue }) => {
       const burialType = getValue() as BurialType;
-      return getBurialTypeName(burialType);
+      return <Button variant="link">{getBurialTypeName(burialType)}</Button>;
     },
   },
   {
@@ -47,7 +48,7 @@ export const columns: ColumnDef<Burial>[] = [
       const ownerId = getValue() as string;
       return (
         <Badge variant={ownerId ? "secondary" : "default"}>
-          {ownerId ? "Owned" : "Not owned"}
+          {ownerId ? "Owned" : "Available"}
         </Badge>
       );
     },
@@ -60,20 +61,6 @@ export const columns: ColumnDef<Burial>[] = [
     cell: ({ getValue }) => {
       const coordinate = getValue() as { latitude: number; longitude: number };
       return `${coordinate.latitude}, ${coordinate.longitude}`;
-    },
-  },
-  {
-    accessorKey: "id",
-    header: "",
-    cell: ({ getValue }) => {
-      const ownerId = getValue() as string;
-      return (
-        <DeleteDialog
-          onDelete={async () => {
-            await axios.delete(`/api/burials/${ownerId}`);
-          }}
-        />
-      );
     },
   },
 ];
