@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -54,18 +54,18 @@ const AddDeceasedDialog = ({ owners }: Props) => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [ownerId, setOwnerId] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const form = useForm<DeceasedZod>({
     defaultValues: {
       burialId: "",
       name: "",
-      ownerId: "",
     },
   });
   const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = async (deceased: DeceasedZod) => {
     try {
-      console.log(deceased);
+      setLoading(true);
       await axios.post(`/api/deceased`, deceased);
       toast({
         title: "Success",
@@ -81,6 +81,8 @@ const AddDeceasedDialog = ({ owners }: Props) => {
         variant: "destructive",
       });
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -109,7 +111,6 @@ const AddDeceasedDialog = ({ owners }: Props) => {
             <div className="w-full">
               <SelectOwner
                 onValueChange={(value) => {
-                  form.setValue("ownerId", value);
                   setOwnerId(value);
                 }}
                 owners={owners}
@@ -136,7 +137,9 @@ const AddDeceasedDialog = ({ owners }: Props) => {
           <Button
             type="submit"
             onClick={() => formRef.current?.requestSubmit()}
+            disabled={loading}
           >
+            {loading && <Loader2 className="animate-spin" />}
             Create
           </Button>
         </DialogFooter>

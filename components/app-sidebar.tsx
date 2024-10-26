@@ -1,5 +1,12 @@
 "use client";
-import { BrickWall, HeartOff, Home, Milestone, Users } from "lucide-react";
+import {
+  BrickWall,
+  HeartOff,
+  Home,
+  MapPinHouse,
+  UserRound,
+  Users,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -33,9 +40,14 @@ const items = [
     icon: HeartOff,
   },
   {
-    title: "Burials",
+    title: "Plot",
     url: "/burials",
-    icon: Milestone,
+    icon: MapPinHouse,
+  },
+  {
+    title: "Owners",
+    url: "/owners",
+    icon: UserRound,
   },
 ];
 

@@ -6,90 +6,98 @@ import { getBurialTypeName } from "@/functions/getBurialTypeName";
 import { Burial, BurialType, Deceased, Owner } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-import DeleteDialog from "./DeleteDialog";
+import DeleteDialog from "../../../components/delete-dialog";
+import axios from "axios";
 
-export const columns: ColumnDef<Deceased & { owner: Owner; burial: Burial }>[] =
-  [
-    {
-      accessorKey: "name",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Name" />
-      ),
-      cell: ({ getValue, row: { original } }) => {
-        const name = getValue() as string;
-        return (
-          <Link href={`/deceased/${original.id}`}>
-            <Button variant="link">{name}</Button>
-          </Link>
-        );
-      },
+export const columns: ColumnDef<
+  Deceased & { burial: Burial & { owner: Owner | null } }
+>[] = [
+  {
+    accessorKey: "name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
+    cell: ({ getValue, row: { original } }) => {
+      const name = getValue() as string;
+      return (
+        <Link href={`/deceased/${original.id}`}>
+          <Button variant="link">{name}</Button>
+        </Link>
+      );
     },
-    {
-      id: "owner",
-      accessorFn: ({ owner }) => owner.name,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Owner" />
-      ),
-      cell: ({ getValue }) => {
-        const name = getValue() as string;
-        return <p>{name}</p>;
-      },
+  },
+  {
+    id: "owner",
+    accessorFn: ({ burial }) => burial.owner?.name,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Owner" />
+    ),
+    cell: ({ getValue }) => {
+      const name = getValue() as string;
+      return <p>{name}</p>;
     },
-    {
-      id: "type",
-      accessorFn: ({ burial }) => burial.type,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Type" />
-      ),
+  },
+  {
+    id: "type",
+    accessorFn: ({ burial }) => burial.type,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Type" />
+    ),
 
-      cell: ({ getValue }) => {
-        const burialType = getValue() as BurialType;
-        return <Badge>{`${getBurialTypeName(burialType)}`}</Badge>;
-      },
+    cell: ({ getValue }) => {
+      const burialType = getValue() as BurialType;
+      return <Badge>{`${getBurialTypeName(burialType)}`}</Badge>;
     },
-    {
-      id: "block",
-      accessorFn: ({ burial }) => burial.block,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Block" />
-      ),
-      cell: ({ getValue }) => {
-        const block = getValue() as string;
-        return <p>{`${block}`}</p>;
-      },
+  },
+  {
+    id: "block",
+    accessorFn: ({ burial }) => burial.block,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Block" />
+    ),
+    cell: ({ getValue }) => {
+      const block = getValue() as string;
+      return <p>{`${block}`}</p>;
     },
-    {
-      id: "row",
-      accessorFn: ({ burial }) => burial.row,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Lot" />
-      ),
-      cell: ({ getValue }) => {
-        const row = getValue() as string;
-        return <p>{`${row}`}</p>;
-      },
+  },
+  {
+    id: "row",
+    accessorFn: ({ burial }) => burial.row,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Lot" />
+    ),
+    cell: ({ getValue }) => {
+      const row = getValue() as string;
+      return <p>{`${row}`}</p>;
     },
-    {
-      id: "coordinate",
-      accessorFn: ({ burial }) => burial.coordinates,
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Coordinate" />
-      ),
-      cell: ({ getValue }) => {
-        const coordinate = getValue() as {
-          latitude: number;
-          longitude: number;
-        };
-        return <p>{`${coordinate.latitude}, ${coordinate.longitude}`}</p>;
-      },
+  },
+  {
+    id: "coordinate",
+    accessorFn: ({ burial }) => burial.coordinates,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Coordinate" />
+    ),
+    cell: ({ getValue }) => {
+      const coordinate = getValue() as {
+        latitude: number;
+        longitude: number;
+      };
+      return <p>{`${coordinate.latitude}, ${coordinate.longitude}`}</p>;
     },
-    {
-      enableHiding: false,
-      accessorKey: "id",
-      header: "",
-      cell: ({ getValue }) => {
-        const id = getValue() as string;
-        return <DeleteDialog id={id} />;
-      },
+  },
+  {
+    enableHiding: false,
+    accessorKey: "id",
+    header: "",
+    cell: ({ getValue }) => {
+      const id = getValue() as string;
+      return (
+        <DeleteDialog
+          onDelete={async () => {
+            await axios.delete(`/api/deceased/${id}`);
+          }}
+        />
+      );
     },
-  ];
+  },
+];

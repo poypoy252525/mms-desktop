@@ -1,8 +1,4 @@
 import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { Loader2, Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,8 +9,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-const DeleteDialog = ({ id }: { id: string }) => {
+interface Props {
+  onDelete: () => Promise<void>;
+}
+
+const DeleteDialog = ({ onDelete }: Props) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -43,15 +46,15 @@ const DeleteDialog = ({ id }: { id: string }) => {
             onClick={async () => {
               try {
                 setLoading(true);
-                await axios.delete(`/api/deceased/${id}`);
+                await onDelete();
                 toast({
                   title: "Deleted",
-                  description: "Deceased has been deleted",
+                  description: "Data has been deleted",
                 });
                 router.refresh();
                 setOpen(false);
               } catch (error) {
-                console.error("error deleting deceased: ", error);
+                console.error("error deleting data: ", error);
               } finally {
                 setLoading(false);
               }

@@ -4,28 +4,32 @@ import { DataTable } from "@/components/ui/data-table";
 import React from "react";
 import { columns } from "./columns";
 import prisma from "@/prisma/db";
-import AddBurialDialog from "@/components/add-burial-dialog";
+import AddOwnerDialog from "@/components/add-owner-dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-const Burials = async () => {
-  const burials = await prisma.burial.findMany();
+const page = async () => {
+  const owners = await prisma.owner.findMany({
+    include: {
+      burials: true,
+    },
+  });
   return (
     <PageContainer>
       <PageHeader>
-        <span>Plot</span>
-        <AddBurialDialog
+        Owners
+        <AddOwnerDialog
           trigger={
             <Button size="sm">
               <Plus />
-              Create Plot
+              Create Owner
             </Button>
           }
         />
       </PageHeader>
-      <DataTable columns={columns} data={burials} />
+      <DataTable columns={columns} data={owners} />
     </PageContainer>
   );
 };
 
-export default Burials;
+export default page;

@@ -1,10 +1,15 @@
+import { authOptions } from "@/constants";
 import { isValidGoogleIdToken } from "@/functions/googleAuth";
 import prisma from "@/prisma/db";
 import { deceasedSchema } from "@/schemas/DeceasedSchema";
 import { BurialType } from "@prisma/client";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   const body = await request.json();
   const validation = deceasedSchema.safeParse(body);
   if (!validation.success)
@@ -14,11 +19,7 @@ export const POST = async (request: NextRequest) => {
 
   let deceased = await prisma.deceased.findFirst({
     where: {
-      AND: [
-        { burialId: data.burialId },
-        { ownerId: data.ownerId },
-        { name: { contains: data.name } },
-      ],
+      AND: [{ burialId: data.burialId }, { name: { contains: data.name } }],
     },
   });
 
@@ -29,7 +30,6 @@ export const POST = async (request: NextRequest) => {
     data: {
       name: data.name,
       burialId: data.burialId,
-      ownerId: data.ownerId,
     },
   });
 
@@ -51,7 +51,6 @@ export const GET = async (request: NextRequest) => {
     },
     include: {
       burial: true,
-      owner: true,
     },
   });
 

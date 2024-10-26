@@ -8,7 +8,6 @@ const page = async ({ params }: { params: { id: string } }) => {
     },
     include: {
       burial: true,
-      owner: true,
     },
   });
   return <div>{deceased?.name}</div>;

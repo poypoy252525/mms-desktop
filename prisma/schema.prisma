@@ -38,8 +38,6 @@ model Deceased {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  ownerId   String   @db.ObjectId
-  owner     Owner    @relation(fields: [ownerId], references: [id])
   status    Status   @default(ACTIVE)
   burial    Burial   @relation(fields: [burialId], references: [id])
   burialId  String   @db.ObjectId
@@ -53,8 +51,7 @@ enum Status {
 model Owner {
   id       String     @id @default(auto()) @map("_id") @db.ObjectId
   name     String
-  burial   Burial[]
-  deceased Deceased[]
+  burials  Burial[]
 }
 
 model Burial {

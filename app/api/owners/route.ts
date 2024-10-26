@@ -1,8 +1,14 @@
+import { authOptions } from "@/constants";
 import prisma from "@/prisma/db";
 import { ownerSchema } from "@/schemas/OwnerSchema";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
   const body = await request.json();
   const validation = ownerSchema.safeParse(body);
   if (!validation.success)
@@ -20,11 +26,20 @@ export const POST = async (request: NextRequest) => {
   owner = await prisma.owner.create({
     data: {
       name: data.name,
-      burial: {
+      burials: {
         connect: {
           id: data.burialId,
         },
       },
+    },
+  });
+
+  await prisma.burial.update({
+    data: {
+      isVacant: false,
+    },
+    where: {
+      id: data.burialId,
     },
   });
 

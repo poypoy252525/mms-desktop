@@ -18,7 +18,6 @@ export const GET = async (
     },
     include: {
       burial: true,
-      owner: true,
     },
   });
 

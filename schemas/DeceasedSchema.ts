@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const deceasedSchema = z.object({
   name: z.string(),
-  ownerId: z.string(),
   burialId: z.string(),
 });
 

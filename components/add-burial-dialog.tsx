@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -20,13 +21,13 @@ import { BurialZod } from "@/schemas/BurialSchema";
 import axios from "axios";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
 
-const AddBurialDialog = () => {
+const AddBurialDialog = ({ trigger }: { trigger?: ReactNode }) => {
   const router = useRouter();
   const { toast } = useToast();
 
@@ -66,9 +67,13 @@ const AddBurialDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="outline">
-          <Plus />
-        </Button>
+        {trigger ? (
+          trigger
+        ) : (
+          <Button size="icon" variant="outline">
+            <Plus />
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

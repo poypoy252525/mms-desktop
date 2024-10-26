@@ -27,7 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Burial } from "@prisma/client";
 import axios from "axios";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
@@ -36,9 +36,11 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
 
-const AddOwnerDialog = () => {
+const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
   const router = useRouter();
   const { toast } = useToast();
+
+  const [open, setOpen] = useState<boolean>(false);
 
   const form = useForm<OwnerZod>({
     resolver: zodResolver(ownerSchema),
@@ -47,7 +49,6 @@ const AddOwnerDialog = () => {
     },
   });
 
-  const [open, setOpen] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = async (owner: OwnerZod) => {
@@ -73,9 +74,13 @@ const AddOwnerDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="outline">
-          <Plus />
-        </Button>
+        {trigger ? (
+          trigger
+        ) : (
+          <Button size="icon" variant="outline">
+            <Plus />
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -157,26 +162,29 @@ const BurialCombobox = ({
           <CommandList>
             <CommandEmpty>No Plot found.</CommandEmpty>
             <CommandGroup>
-              {burials.map((burial) => (
-                <CommandItem
-                  key={burial.id}
-                  value={burial.id}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === burial.id ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {`${getBurialTypeName(burial.type)}: Block ${
-                    burial.block
-                  } Lot ${burial.row}`}
-                </CommandItem>
-              ))}
+              {burials.map(
+                (burial) =>
+                  !burial.ownerId && (
+                    <CommandItem
+                      key={burial.id}
+                      value={burial.id}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === burial.id ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {`${getBurialTypeName(burial.type)}: Block ${
+                        burial.block
+                      } Lot ${burial.row}`}
+                    </CommandItem>
+                  )
+              )}
             </CommandGroup>
           </CommandList>
         </Command>
