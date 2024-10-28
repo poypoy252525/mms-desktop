@@ -42,12 +42,14 @@ export const GET = async (request: NextRequest) => {
 
   const burialtype =
     request.nextUrl.searchParams.get("burialType") || undefined;
+  const search = request.nextUrl.searchParams.get("search") || undefined;
 
   const deceased = await prisma.deceased.findMany({
     where: {
       burial: {
         type: burialtype as BurialType,
       },
+      name: { contains: search },
     },
     include: {
       burial: true,
