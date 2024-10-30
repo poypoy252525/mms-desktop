@@ -8,14 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { useToast } from "@/hooks/use-toast";
 import { BurialZod } from "@/schemas/BurialSchema";
 import axios from "axios";
@@ -23,6 +15,7 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import BurialTypeSelect from "./burial-type-select";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
@@ -106,23 +99,3 @@ const AddBurialDialog = ({ trigger }: { trigger?: ReactNode }) => {
 };
 
 export default AddBurialDialog;
-
-const BurialTypeSelect = ({
-  onValueChange,
-}: {
-  onValueChange: (value: string) => void;
-}) => {
-  return (
-    <Select onValueChange={onValueChange}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Plot Type" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="FAMILY_LOT">Family Lot</SelectItem>
-        <SelectItem value="LAWN_LOT">Lawn Lot</SelectItem>
-        <SelectItem value="APARTMENT">Apartment</SelectItem>
-        <SelectItem value="COLUMBARIUM">Columbarium</SelectItem>
-      </SelectContent>
-    </Select>
-  );
-};

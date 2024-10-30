@@ -9,7 +9,7 @@ import { signOut } from "next-auth/react";
 const Navbar = () => {
   const { setTheme, theme } = useTheme();
   return (
-    <header className="flex w-full items-center p-2 sticky top-0 bg-background/75 backdrop-blur-sm justify-between">
+    <header className="flex w-full items-center p-2 sticky top-0 bg-background/75 backdrop-blur-sm justify-between z-50">
       <SidebarTrigger />
       <div className="flex items-center space-x-2">
         <Button

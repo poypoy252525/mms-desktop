@@ -40,11 +40,11 @@ const chartConfig = {
   },
   columbary: {
     label: "Columbary",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-3))",
   },
   apartment: {
     label: "Apartment",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-4))",
   },
 } satisfies ChartConfig;
 

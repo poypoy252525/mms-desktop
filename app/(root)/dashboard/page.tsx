@@ -54,10 +54,10 @@ const Dashboard = async () => {
             />
           </div>
         ))}
-        <div className="col-span-5">
+        <div className="col-span-7">
           <BarChartComponent />
         </div>
-        <div className="col-span-7">
+        <div className="col-span-5">
           <RecentAddedDeceasedCard />
         </div>
       </div>

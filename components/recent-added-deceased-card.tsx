@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import prisma from "@/prisma/db";
-import { Deceased, Owner } from "@prisma/client";
+import { Deceased } from "@prisma/client";
 import { StickyNote } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
@@ -17,13 +17,6 @@ const RecentAddedDeceasedCard = async () => {
     take: 5,
     orderBy: {
       createdAt: "desc",
-    },
-    include: {
-      burial: {
-        select: {
-          owner: true,
-        },
-      },
     },
   });
   return (
@@ -40,11 +33,7 @@ const RecentAddedDeceasedCard = async () => {
 
 export default RecentAddedDeceasedCard;
 
-const RecentTable = ({
-  deceased,
-}: {
-  deceased: (Deceased & { burial: { owner: Owner | null } })[];
-}) => {
+const RecentTable = ({ deceased }: { deceased: Deceased[] }) => {
   return (
     <Table>
       <TableCaption>A list of recent deceased.</TableCaption>
@@ -52,7 +41,6 @@ const RecentTable = ({
         <TableRow>
           <TableHead className="w-[60px]"></TableHead>
           <TableHead>Name</TableHead>
-          <TableHead>Owner</TableHead>
           <TableHead className="text-right">Status</TableHead>
         </TableRow>
       </TableHeader>
@@ -63,7 +51,6 @@ const RecentTable = ({
               <StickyNote />
             </TableCell>
             <TableCell>{item.name}</TableCell>
-            <TableCell>{item.burial.owner?.name}</TableCell>
             <TableCell className="text-right">{item.status}</TableCell>
           </TableRow>
         ))}
