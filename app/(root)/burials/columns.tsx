@@ -1,4 +1,5 @@
 "use client";
+import EditBurialDialog from "@/components/edit-burial-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
@@ -59,6 +60,15 @@ export const columns: ColumnDef<Burial>[] = [
     cell: ({ getValue }) => {
       const coordinate = getValue() as { latitude: number; longitude: number };
       return `${coordinate.latitude}, ${coordinate.longitude}`;
+    },
+  },
+  {
+    id: "actions",
+    accessorFn: (burial) => burial,
+    header: ({ column }) => "Actions",
+    cell: ({ getValue }) => {
+      const burial = getValue() as Burial;
+      return <EditBurialDialog burial={burial} />;
     },
   },
 ];

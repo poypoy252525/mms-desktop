@@ -8,11 +8,13 @@ import {
 
 const BurialTypeSelect = ({
   onValueChange,
+  defaultValue,
 }: {
+  defaultValue?: string;
   onValueChange: (value: string) => void;
 }) => {
   return (
-    <Select onValueChange={onValueChange}>
+    <Select onValueChange={onValueChange} defaultValue={defaultValue}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder="Plot Type" />
       </SelectTrigger>

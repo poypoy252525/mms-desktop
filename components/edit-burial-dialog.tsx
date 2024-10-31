@@ -11,7 +11,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { BurialZod } from "@/schemas/BurialSchema";
 import axios from "axios";
-import { Loader2, Plus } from "lucide-react";
+import { Edit2, Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,39 +19,52 @@ import BurialTypeSelect from "./burial-type-select";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
+import { Burial } from "@prisma/client";
 
-const AddBurialDialog = ({ trigger }: { trigger?: ReactNode }) => {
+interface Coordinate {
+  latitude: number;
+  longitude: number;
+}
+
+const EditBurialDialog = ({
+  trigger,
+  burial,
+}: {
+  trigger?: ReactNode;
+  burial: Burial;
+}) => {
   const router = useRouter();
   const { toast } = useToast();
 
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<BurialZod>({
     defaultValues: {
-      block: "",
-      latitude: 0,
-      longitude: 0,
-      row: "",
-      type: "",
+      block: burial.block,
+      latitude: (burial.coordinates as unknown as Coordinate).latitude,
+      longitude: (burial.coordinates as unknown as Coordinate).longitude,
+      row: burial.row,
+      type: burial.type,
     },
   });
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const onSubmit = async (burial: BurialZod) => {
+  const onSubmit = async (burialZod: BurialZod) => {
     try {
       setLoading(true);
-      await axios.post(`/api/burials`, burial);
+      await axios.patch(`/api/burials/${burial.id}`, burialZod);
       router.refresh();
       toast({
         title: "Success",
-        description: "The plot has been created successfully",
+        description: "The plot has been updated successfully",
       });
     } catch (error) {
-      console.error("failed to create new plot: ", error);
+      console.error("failed to update new plot: ", error);
       toast({
         title: "Failed",
-        description: "Failed to create Plot",
+        description: "Failed to update Plot",
         variant: "destructive",
       });
       throw error;
@@ -67,18 +80,19 @@ const AddBurialDialog = ({ trigger }: { trigger?: ReactNode }) => {
           trigger
         ) : (
           <Button size="icon" variant="outline">
-            <Plus />
+            <Edit2 />
           </Button>
         )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create</DialogTitle>
-          <DialogDescription>This will create new plot</DialogDescription>
+          <DialogTitle>Edit</DialogTitle>
+          <DialogDescription>This will update current plot</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} />
           <BurialTypeSelect
+            defaultValue={burial.type}
             onValueChange={(value) => form.setValue("type", value)}
           />
           <Input {...form.register("block")} placeholder="Block" />
@@ -96,7 +110,7 @@ const AddBurialDialog = ({ trigger }: { trigger?: ReactNode }) => {
               disabled={loading}
             >
               {loading && <Loader2 className="animate-spin" />}
-              Create
+              Save changes
             </Button>
           </DialogFooter>
         </Form>
@@ -105,4 +119,4 @@ const AddBurialDialog = ({ trigger }: { trigger?: ReactNode }) => {
   );
 };
 
-export default AddBurialDialog;
+export default EditBurialDialog;
