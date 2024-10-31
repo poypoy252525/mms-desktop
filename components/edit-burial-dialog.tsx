@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { BurialZod } from "@/schemas/BurialSchema";
+import { Burial } from "@prisma/client";
 import axios from "axios";
-import { Edit2, Loader2, Plus } from "lucide-react";
+import { Edit2, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,7 +20,6 @@ import BurialTypeSelect from "./burial-type-select";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
-import { Burial } from "@prisma/client";
 
 interface Coordinate {
   latitude: number;

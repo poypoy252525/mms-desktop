@@ -65,7 +65,7 @@ export const columns: ColumnDef<Burial>[] = [
   {
     id: "actions",
     accessorFn: (burial) => burial,
-    header: ({ column }) => "Actions",
+    header: "Actions",
     cell: ({ getValue }) => {
       const burial = getValue() as Burial;
       return <EditBurialDialog burial={burial} />;
