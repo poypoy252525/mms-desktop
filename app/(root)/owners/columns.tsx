@@ -2,12 +2,15 @@
 
 import DeleteDialog from "@/components/delete-dialog";
 import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
+import UpdateOwnerDialog from "@/components/update-owner-dialog";
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
 import { Burial, Owner } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import axios from "axios";
 
-export const columns: ColumnDef<Owner & { burials: Burial[] }>[] = [
+export type OwnerBurial = Owner & { burials: Burial[] };
+
+export const columns: ColumnDef<OwnerBurial>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
@@ -28,16 +31,21 @@ export const columns: ColumnDef<Owner & { burials: Burial[] }>[] = [
     },
   },
   {
-    accessorKey: "id",
+    id: "actions",
+    accessorFn: (owner) => owner,
     header: "Actions",
     cell: ({ getValue }) => {
-      const ownerId = getValue() as string;
+      const owner = getValue() as OwnerBurial;
+      console.log(owner);
       return (
-        <DeleteDialog
-          onDelete={async () => {
-            await axios.delete(`/api/owners/${ownerId}`);
-          }}
-        />
+        <div className="flex space-x-2">
+          <DeleteDialog
+            onDelete={async () => {
+              await axios.delete(`/api/owners/${owner.id}`);
+            }}
+          />
+          <UpdateOwnerDialog owner={owner} />
+        </div>
       );
     },
   },

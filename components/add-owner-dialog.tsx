@@ -26,7 +26,7 @@ import { ownerSchema, OwnerZod } from "@/schemas/OwnerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Burial } from "@prisma/client";
 import axios from "axios";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, Plus } from "lucide-react";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
@@ -35,12 +35,14 @@ import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { getBurialTypeName } from "@/functions/getBurialTypeName";
+import BurialCombobox from "./burial-combobox";
 
 const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
   const router = useRouter();
   const { toast } = useToast();
 
   const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<OwnerZod>({
     resolver: zodResolver(ownerSchema),
@@ -53,6 +55,7 @@ const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
 
   const onSubmit = async (owner: OwnerZod) => {
     try {
+      setLoading(true);
       await axios.post(`/api/owners`, owner, {});
       router.refresh();
       toast({
@@ -68,6 +71,8 @@ const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
         variant: "destructive",
       });
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +105,11 @@ const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
           <Button onClick={() => setOpen(false)} variant="secondary">
             Cancel
           </Button>
-          <Button onClick={() => formRef.current?.requestSubmit()}>
+          <Button
+            onClick={() => formRef.current?.requestSubmit()}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="animate-spin" />}
             Create
           </Button>
         </DialogFooter>
@@ -110,85 +119,3 @@ const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
 };
 
 export default AddOwnerDialog;
-
-const BurialCombobox = ({
-  onValueChange,
-}: {
-  onValueChange: (value: string) => void;
-}) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-  const [burials, setBurials] = useState<Burial[]>([]);
-
-  useEffect(() => {
-    onValueChange(value);
-  }, [value]);
-
-  useEffect(() => {
-    const fetchBurials = async () => {
-      try {
-        const { data } = await axios.get(`/api/burials`, {
-          params: {},
-        });
-        setBurials(data);
-      } catch (error) {
-        console.error("error fetching burials from burial combobox: ", error);
-        throw error;
-      }
-    };
-    fetchBurials();
-  }, []);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between"
-        >
-          {value
-            ? `Block ${
-                burials.find((burial) => burial.id === value)?.block
-              } Lot ${burials.find((burial) => burial.id === value)?.row}`
-            : "Select Plot..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
-        <Command>
-          <CommandInput placeholder="Search plot..." />
-          <CommandList>
-            <CommandEmpty>No Plot found.</CommandEmpty>
-            <CommandGroup>
-              {burials.map(
-                (burial) =>
-                  !burial.ownerId && (
-                    <CommandItem
-                      key={burial.id}
-                      value={burial.id}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === burial.id ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      {`${getBurialTypeName(burial.type)}: Block ${
-                        burial.block
-                      } Lot ${burial.row}`}
-                    </CommandItem>
-                  )
-              )}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-};
