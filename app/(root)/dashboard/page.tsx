@@ -1,4 +1,4 @@
-import { BarChartComponent } from "@/components/bar-chart";
+import PlotPieChart from "@/components/pie-chart";
 import PageContainer from "@/components/page-container";
 import PageHeader from "@/components/page-header";
 import RecentAddedDeceasedCard from "@/components/recent-added-deceased-card";
@@ -7,11 +7,42 @@ import prisma from "@/prisma/db";
 import { Users, UserX } from "lucide-react";
 import React from "react";
 
+const getChartData = async () => {
+  const numberOfLawnLot = await prisma.burial.count({
+    where: { type: "LAWN_LOT" },
+  });
+  const numberOfApartment = await prisma.burial.count({
+    where: { type: "APARTMENT" },
+  });
+  const numberOfColumbarium = await prisma.burial.count({
+    where: { type: "COLUMBARIUM" },
+  });
+  const numberOfFamilyLot = await prisma.burial.count({
+    where: { type: "FAMILY_LOT" },
+  });
+
+  return [
+    { plot: "family", number: numberOfFamilyLot, fill: "var(--color-family)" },
+    { plot: "lawn", number: numberOfLawnLot, fill: "var(--color-lawn)" },
+    {
+      plot: "apartment",
+      number: numberOfApartment,
+      fill: "var(--color-apartment)",
+    },
+    {
+      plot: "columbarium",
+      number: numberOfColumbarium,
+      fill: "var(--color-columbarium)",
+    },
+  ];
+};
+
 const Dashboard = async () => {
   const numberOfUser = await prisma.user.count();
   const numberOfDeceased = await prisma.deceased.count();
   const numberOfBurials = await prisma.burial.count();
   const numberOfOwners = await prisma.owner.count();
+
   const briefInfos = [
     {
       title: "Total Users",
@@ -38,6 +69,7 @@ const Dashboard = async () => {
       value: `+${numberOfOwners}`,
     },
   ];
+
   return (
     <PageContainer>
       <PageHeader>
@@ -55,7 +87,7 @@ const Dashboard = async () => {
           </div>
         ))}
         <div className="col-span-7">
-          <BarChartComponent />
+          <PlotPieChart chartData={await getChartData()} />
         </div>
         <div className="col-span-5">
           <RecentAddedDeceasedCard />
