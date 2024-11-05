@@ -1,13 +1,5 @@
 "use client";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -16,26 +8,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 import { ownerSchema, OwnerZod } from "@/schemas/OwnerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Burial } from "@prisma/client";
 import axios from "axios";
-import { Check, ChevronsUpDown, Loader2, Plus } from "lucide-react";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ReactNode, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import BurialCombobox from "./burial-combobox";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
-import { getBurialTypeName } from "@/functions/getBurialTypeName";
-import BurialCombobox from "./burial-combobox";
 
 const AddOwnerDialog = ({ trigger }: { trigger?: ReactNode }) => {
   const router = useRouter();

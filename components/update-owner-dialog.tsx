@@ -1,4 +1,5 @@
 "use client";
+import { OwnerBurial } from "@/app/(root)/owners/columns";
 import {
   Dialog,
   DialogContent,
@@ -8,18 +9,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 import { OwnerZod } from "@/schemas/OwnerSchema";
-import { Owner } from "@prisma/client";
+import axios from "axios";
 import { Loader2, UserRoundPen } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { Input } from "./ui/input";
-import { useRef, useState } from "react";
-import axios from "axios";
-import { OwnerBurial } from "@/app/(root)/owners/columns";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
 
 const UpdateOwnerDialog = ({ owner }: { owner: OwnerBurial }) => {
   const [open, setOpen] = useState<boolean>(false);
