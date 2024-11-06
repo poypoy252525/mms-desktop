@@ -1,14 +1,14 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import buildings from "@/geojson/buildings.json";
-import routes from "@/geojson/residential_routes.json";
-import lawn from "@/geojson/lawn.json";
 import apartment from "@/geojson/apartment.json";
+import buildings from "@/geojson/buildings.json";
 import columbary from "@/geojson/columbary.json";
+import lawn from "@/geojson/lawn.json";
+import routes from "@/geojson/residential_routes.json";
 
 interface Props {
   onDragEnd?: (coordinate: { latitude: number; longitude: number }) => void;
@@ -147,7 +147,8 @@ const Map = ({ onDragEnd }: Props) => {
         .addTo(map);
       marker.on("dragend", () => {
         const lngLat = marker.getLngLat();
-        onDragEnd && onDragEnd({ longitude: lngLat.lng, latitude: lngLat.lat });
+        if (onDragEnd)
+          onDragEnd({ longitude: lngLat.lng, latitude: lngLat.lat });
       });
     }
   }, [mapRef]);
