@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "apartment"
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [121.146958233, 14.732285665],
+            [121.146323891, 14.732469841],
+            [121.146315844, 14.732446495],
+            [121.146951528, 14.73225713],
+            [121.146958233, 14.732285665]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "label": "Apartment"
+      },
+      "geometry": {
+        "coordinates": [121.14662667147036, 14.732367393823012],
+        "type": "Point"
+      },
+      "id": 1
+    }
+  ]
+}
