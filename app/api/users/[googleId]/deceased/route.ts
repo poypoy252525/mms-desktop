@@ -23,7 +23,7 @@ export const GET = async (
     },
   });
 
-  return NextResponse.json(user?.deceased, { status: 200 });
+  return NextResponse.json(user?.deceased || [], { status: 200 });
 };
 
 const userListSchema = z.object({
