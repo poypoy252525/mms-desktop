@@ -15,7 +15,11 @@ export const GET = async (
       googleId: params.googleId,
     },
     include: {
-      deceased: true,
+      deceased: {
+        include: {
+          burial: true,
+        },
+      },
     },
   });
 
