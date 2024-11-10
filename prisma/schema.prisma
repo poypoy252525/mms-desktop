@@ -23,6 +23,7 @@ model User {
   lastName   String
   photo      String
   pushTokens PushToken[]
+  deceased   Deceased[]
 }
 
 model PushToken {
@@ -41,6 +42,8 @@ model Deceased {
   status    Status   @default(ACTIVE)
   burial    Burial   @relation(fields: [burialId], references: [id])
   burialId  String   @db.ObjectId
+  userId    String?  @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
 enum Status {
