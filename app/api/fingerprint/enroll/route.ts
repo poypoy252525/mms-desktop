@@ -1,0 +1,10 @@
+import { NextRequest, NextResponse } from "next/server";
+
+export const POST = async (request: NextRequest) => {
+  console.log(await request.json());
+  return NextResponse.json("working", { status: 200 });
+};
+
+export const GET = async (request: NextRequest) => {
+  return NextResponse.json("works", { status: 200 });
+};
