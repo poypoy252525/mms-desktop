@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { Loader2, Plus } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import BurialTypeSelect from "./burial-type-select";
 import { Form } from "./ui/form";
@@ -22,6 +22,7 @@ import axios from "axios";
 import { Burial, Deceased, Owner } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import Map from "./map";
 
 const AddDeceasedDialogWithoutOwner = () => {
   const [open, setOpen] = useState(false);
@@ -34,6 +35,11 @@ const AddDeceasedDialogWithoutOwner = () => {
     burial: BurialZod;
   }>({});
   const formRef = useRef<HTMLFormElement>(null);
+
+  const [coordinate, setCoordinate] = useState<{
+    longitude: number;
+    latitude: number;
+  }>();
 
   const onSubmit = async (data: {
     deceased: DeceasedZod;
@@ -74,6 +80,13 @@ const AddDeceasedDialogWithoutOwner = () => {
     }
   };
 
+  useEffect(() => {
+    if (coordinate) {
+      form.setValue("burial.latitude", coordinate.latitude);
+      form.setValue("burial.longitude", coordinate.longitude);
+    }
+  }, [coordinate]);
+
   return (
     <Form {...form}>
       <form
@@ -87,54 +100,66 @@ const AddDeceasedDialogWithoutOwner = () => {
               <span>New deceased without owner</span>
             </Button>
           </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create</DialogTitle>
-              <DialogDescription>
-                this will create new deceased, owner and plot
-              </DialogDescription>
-            </DialogHeader>
+          <DialogContent className="max-w-screen-md">
+            <div className="grid grid-cols-12 space-x-4">
+              <div className="col-span-6 space-y-4">
+                <DialogHeader>
+                  <DialogTitle>Create</DialogTitle>
+                  <DialogDescription>
+                    this will create new deceased, owner and plot
+                  </DialogDescription>
+                </DialogHeader>
 
-            <div className="flex flex-col space-y-4">
-              <div className="flex space-x-2">
-                <Input
-                  {...form.register("deceased.name")}
-                  placeholder="Deceased name"
-                />
-                <Input
-                  {...form.register("owner.name")}
-                  placeholder="Owner name"
-                />
+                <div className="flex flex-col space-y-4">
+                  <div className="flex space-x-2">
+                    <Input
+                      {...form.register("deceased.name")}
+                      placeholder="Deceased name"
+                    />
+                    <Input
+                      {...form.register("owner.name")}
+                      placeholder="Owner name"
+                    />
+                  </div>
+                  <BurialTypeSelect
+                    onValueChange={(value) =>
+                      form.setValue("burial.type", value)
+                    }
+                  />
+                  <Input
+                    {...form.register("burial.block")}
+                    placeholder="Block"
+                  />
+                  <Input {...form.register("burial.row")} placeholder="Lot" />
+                  <div className="flex space-x-2">
+                    <Input
+                      {...form.register("burial.latitude")}
+                      placeholder="Latitude"
+                    />
+                    <Input
+                      {...form.register("burial.longitude")}
+                      placeholder="Longitude"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button onClick={() => setOpen(false)} variant="secondary">
+                    Cancel
+                  </Button>
+                  <Button
+                    disabled={loading}
+                    type="submit"
+                    onClick={() => formRef.current?.requestSubmit()}
+                  >
+                    {loading && <Loader2 className="animate-spin" />}
+                    Create
+                  </Button>
+                </DialogFooter>
               </div>
-              <BurialTypeSelect
-                onValueChange={(value) => form.setValue("burial.type", value)}
-              />
-              <Input {...form.register("burial.block")} placeholder="Block" />
-              <Input {...form.register("burial.row")} placeholder="Lot" />
-              <div className="flex space-x-2">
-                <Input
-                  {...form.register("burial.latitude")}
-                  placeholder="Latitude"
-                />
-                <Input
-                  {...form.register("burial.longitude")}
-                  placeholder="Longitude"
-                />
+              <div className="col-span-6">
+                <Map onDragEnd={(coords) => setCoordinate(coords)} />
               </div>
             </div>
-            <DialogFooter>
-              <Button onClick={() => setOpen(false)} variant="secondary">
-                Cancel
-              </Button>
-              <Button
-                disabled={loading}
-                type="submit"
-                onClick={() => formRef.current?.requestSubmit()}
-              >
-                {loading && <Loader2 className="animate-spin" />}
-                Create
-              </Button>
-            </DialogFooter>
           </DialogContent>
         </Dialog>
       </form>

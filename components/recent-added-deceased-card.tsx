@@ -11,6 +11,7 @@ import prisma from "@/prisma/db";
 import { Deceased } from "@prisma/client";
 import { StickyNote } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Badge } from "./ui/badge";
 
 const RecentAddedDeceasedCard = async () => {
   const recentDeceased = await prisma.deceased.findMany({
@@ -51,7 +52,9 @@ const RecentTable = ({ deceased }: { deceased: Deceased[] }) => {
               <StickyNote />
             </TableCell>
             <TableCell>{item.name}</TableCell>
-            <TableCell className="text-right">{item.status}</TableCell>
+            <TableCell className="text-right">
+              <Badge>{item.status}</Badge>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -1,11 +1,10 @@
-import PlotPieChart from "@/components/pie-chart";
 import PageContainer from "@/components/page-container";
 import PageHeader from "@/components/page-header";
+import PlotPieChart from "@/components/pie-chart";
 import RecentAddedDeceasedCard from "@/components/recent-added-deceased-card";
 import SummaryCard from "@/components/ui/summary-card";
 import prisma from "@/prisma/db";
-import { Users, UserX } from "lucide-react";
-import React from "react";
+import { HeartOff, MapPinHouse, Users } from "lucide-react";
 
 const getChartData = async () => {
   const numberOfLawnLot = await prisma.burial.count({
@@ -53,19 +52,19 @@ const Dashboard = async () => {
     {
       title: "Total Deceased",
       description: "overall amount of death record",
-      icon: <UserX className="w-4 h-4 text-muted-foreground" />,
+      icon: <HeartOff className="w-4 h-4 text-muted-foreground" />,
       value: `+${numberOfDeceased}`,
     },
     {
       title: "Total Plot",
       description: "overall amount of plot record",
-      icon: <UserX className="w-4 h-4 text-muted-foreground" />,
+      icon: <MapPinHouse className="w-4 h-4 text-muted-foreground" />,
       value: `+${numberOfBurials}`,
     },
     {
       title: "Total Owners",
       description: "overall amount of owners",
-      icon: <UserX className="w-4 h-4 text-muted-foreground" />,
+      icon: <Users className="w-4 h-4 text-muted-foreground" />,
       value: `+${numberOfOwners}`,
     },
   ];

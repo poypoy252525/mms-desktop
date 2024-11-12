@@ -1,6 +1,7 @@
 "use client";
 import {
   BrickWall,
+  Briefcase,
   HeartOff,
   Home,
   MapPinHouse,
@@ -48,6 +49,11 @@ const items = [
     title: "Owners",
     url: "/owners",
     icon: UserRound,
+  },
+  {
+    title: "Staffs",
+    url: "/staffs",
+    icon: Briefcase,
   },
 ];
 
