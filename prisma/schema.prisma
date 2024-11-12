@@ -75,3 +75,21 @@ enum BurialType {
   APARTMENT
   COLUMBARIUM
 }
+
+model Staff {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  fingerprintId Int
+  attendance    Attendance[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Attendance {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  staffId   String   @db.ObjectId
+  staff     Staff    @relation(fields: [staffId], references: [id])
+}
