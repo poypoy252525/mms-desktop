@@ -12,9 +12,13 @@ import routes from "@/geojson/residential_routes.json";
 
 interface Props {
   onDragEnd?: (coordinate: { latitude: number; longitude: number }) => void;
+  coords?: { latitude: number; longitude: number };
 }
 
-const Map = ({ onDragEnd }: Props) => {
+const Map = ({
+  onDragEnd,
+  coords = { longitude: 121.14666422082337, latitude: 14.733034006356064 },
+}: Props) => {
   const mapRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (mapRef.current) {
@@ -143,7 +147,7 @@ const Map = ({ onDragEnd }: Props) => {
       });
 
       const marker = new maplibregl.Marker({ draggable: true })
-        .setLngLat([121.14666422082337, 14.733034006356064])
+        .setLngLat([coords.longitude, coords.latitude])
         .addTo(map);
       marker.on("dragend", () => {
         const lngLat = marker.getLngLat();
