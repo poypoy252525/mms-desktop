@@ -16,15 +16,20 @@ export const POST = async (request: NextRequest) => {
   try {
     let staff = await prisma.staff.findFirst({
       where: {
-        name: {
-          equals: data.name,
-        },
+        AND: [
+          {
+            name: data.name,
+          },
+          {
+            fingerprintId: data.fingerprintId,
+          },
+        ],
       },
     });
 
     if (staff)
       return NextResponse.json(
-        { message: "Staff already exist," },
+        { message: "Staff already exist." },
         { status: 409 }
       );
 

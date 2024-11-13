@@ -2,7 +2,7 @@ console.log(process.env.NEXT_PUBLIC_SOCKET_URL);
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-const useSocket = () => {
+const useFingerprintEnroll = () => {
   const [fingerprintId, setFingerprintId] = useState(null);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ const useSocket = () => {
   return { fingerprintId };
 };
 
-export default useSocket;
+export default useFingerprintEnroll;

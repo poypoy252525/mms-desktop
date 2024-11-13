@@ -1,25 +1,22 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+
+import axios from "axios";
+
+const socket = new WebSocket("ws//192.168.100.84/ws");
 
 const useAttendance = () => {
-  const [fingerprintId, setFingerprintId] = useState(null);
-
-  useEffect(() => {
-    const socketIo = io(process.env.NEXT_PUBLIC_SOCKET_URL);
-
-    socketIo.on("attendance", (data) => {
-      console.log("Received fingerprint ID:", data);
-      setFingerprintId(data);
-    });
-
-    // Clean up the socket connection when the component is unmounted
-    return () => {
-      socketIo.disconnect();
+  socket.onopen = () => {
+    socket.onmessage = async (event) => {
+      const data = JSON.parse(event.data);
+      if (data.mode === "attendance") {
+        try {
+          await axios.post(`/api/staffs/attendance/`, data.fingerprintId);
+        } catch (error) {
+          console.error("failed to record attendance: ", error);
+        }
+      }
     };
-  }, []);
-
-  return { fingerprintId };
+  };
 };
 
 export default useAttendance;

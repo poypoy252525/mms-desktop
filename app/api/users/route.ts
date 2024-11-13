@@ -33,14 +33,14 @@ export const POST = async (request: NextRequest) => {
     },
   });
 
-  if (user) return NextResponse.json("User already exist", { status: 400 });
+  if (user) return NextResponse.json("User already exist", { status: 409 });
 
   user = await prisma.user.create({
     data: {
       googleId: data.googleId,
       email: data.email,
       firstName: data.firstName,
-      lastName: data.lastName,
+      lastName: data.lastName || "",
       photo: data.photo,
       pushTokens: {
         create: {

@@ -77,19 +77,36 @@ enum BurialType {
 }
 
 model Staff {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  fingerprintId Int
-  attendance    Attendance[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  fingerprintId Int               @unique
+  attendances   StaffAttendance[]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
 }
 
 model Attendance {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  timestamp DateTime @default(now())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  staffId   String   @db.ObjectId
-  staff     Staff    @relation(fields: [staffId], references: [id])
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  timeStart        DateTime
+  timeEnd          DateTime
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  staffAttendances StaffAttendance[]
+}
+
+model StaffAttendance {
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  timeIn       DateTime?
+  timeOut      DateTime?
+  status       AttendanceStatus
+  staffId      String           @db.ObjectId
+  staff        Staff            @relation(fields: [staffId], references: [id])
+  attendanceId String           @db.ObjectId
+  attendance   Attendance       @relation(fields: [attendanceId], references: [id])
+}
+
+enum AttendanceStatus {
+  PRESENT
+  LATE
+  ABSENT
 }

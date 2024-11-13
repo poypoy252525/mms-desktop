@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "8efde771-e546-4a3a-b14d-64143722a039"
+      }
+    },
+    "android": {
+      "package": "com.poypoy.mmsdesktop"
+    }
+  }
+}

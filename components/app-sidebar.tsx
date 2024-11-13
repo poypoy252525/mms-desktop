@@ -2,6 +2,7 @@
 import {
   BrickWall,
   Briefcase,
+  CalendarDays,
   HeartOff,
   Home,
   MapPinHouse,
@@ -54,6 +55,11 @@ const items = [
     title: "Staffs",
     url: "/staffs",
     icon: Briefcase,
+  },
+  {
+    title: "Attendance",
+    url: "/attendance",
+    icon: CalendarDays,
   },
 ];
 
