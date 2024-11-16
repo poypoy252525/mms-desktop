@@ -31,6 +31,18 @@ export const POST = async (request: NextRequest) => {
   try {
     const timeIn = new Date();
 
+    const staffAttendance = await prisma.staffAttendance.findFirst({
+      where: {
+        AND: [{ staffId: staff.id }, { timeIn }],
+      },
+    });
+
+    if (staffAttendance)
+      return NextResponse.json(
+        { message: "attendance already exist" },
+        { status: 409 }
+      );
+
     const attendance = await prisma.attendance.findUnique({
       where: {
         id: data.attendanceId,

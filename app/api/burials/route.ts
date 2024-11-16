@@ -1,4 +1,5 @@
 import { authOptions } from "@/constants";
+import { isValidGoogleIdToken } from "@/functions/googleAuth";
 import prisma from "@/prisma/db";
 import { burialSchema } from "@/schemas/BurialSchema";
 import { BurialType } from "@prisma/client";
@@ -6,13 +7,31 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
+  const { message, status } = await isValidGoogleIdToken(request);
+  if (status !== 200) return NextResponse.json({ message }, { status });
+
   const searchParams = request.nextUrl.searchParams;
   const ownerId = searchParams.get("ownerId") || undefined;
+  const includes = searchParams.get("includes") || undefined;
+  const type = searchParams.get("type") || undefined;
+  let block = searchParams.get("block") || undefined;
+
+  console.log(type);
+
+  try {
+    block = block?.split(" ")[1].replaceAll("-", "");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    console.log("length is 1: ", error);
+  }
 
   const burials = await prisma.burial.findMany({
     where: {
       ownerId,
+      block,
+      type: type as BurialType,
     },
+    include: includes ? JSON.parse(includes) : undefined,
   });
 
   return NextResponse.json(burials, { status: 200 });

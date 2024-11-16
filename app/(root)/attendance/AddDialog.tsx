@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/date-picker";
@@ -16,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Attendance } from "@prisma/client";
 import axios from "axios";
 import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -34,16 +36,20 @@ websocket.onopen = function () {
 const AddDialog = () => {
   const form = useForm<AttendanceForm>({
     resolver: zodResolver(attendanceSchema),
+    defaultValues: {
+      timeStart: new Date(),
+    },
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [startHour, setStartHour] = useState<number>();
-  const [startMinute, setStartMinute] = useState<number>();
-  const [endHour, setEndHour] = useState<number>();
-  const [endMinute, setEndMinute] = useState<number>();
+  const [startHour, setStartHour] = useState<number>(8);
+  const [startMinute, setStartMinute] = useState<number>(0);
+  const [endHour, setEndHour] = useState<number>(17);
+  const [endMinute, setEndMinute] = useState<number>(0);
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -63,6 +69,7 @@ const AddDialog = () => {
         description: "New Attendance has been created.",
       });
       websocket.send(data.id);
+      router.refresh();
     } catch (error) {
       toast({
         title: "Error",
@@ -98,7 +105,7 @@ const AddDialog = () => {
           </DialogDescription> */}
           </DialogHeader>
           <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-6 space-y-4">
+            <div className="col-span-12 space-y-4">
               <DatePicker label="Start time" form={form} name="timeStart" />
               <FormItem>
                 <FormLabel>Start hour</FormLabel>
@@ -113,7 +120,7 @@ const AddDialog = () => {
                         setStartHour(parsedValue);
                       } else if (target.value === "") {
                         // Optionally, handle the empty case, e.g., reset to 0 or leave blank
-                        setStartHour(undefined); // Set to empty string or some other default value
+                        setStartHour(0); // Set to empty string or some other default value
                       }
                     }}
                   />
@@ -132,49 +139,7 @@ const AddDialog = () => {
                         setStartMinute(parsedValue);
                       } else if (target.value === "") {
                         // Optionally, handle the empty case, e.g., reset to 0 or leave blank
-                        setStartMinute(undefined); // Set to empty string or some other default value
-                      }
-                    }}
-                  />
-                </FormControl>
-              </FormItem>
-            </div>
-
-            <div className="col-span-6 space-y-4">
-              <DatePicker label="Start time" form={form} name="timeEnd" />
-              <FormItem>
-                <FormLabel>End hour</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="End hour"
-                    value={endHour || ""}
-                    onChange={({ target }) => {
-                      const parsedValue = parseInt(target.value, 10);
-                      console.log(parsedValue);
-                      if (!isNaN(parsedValue)) {
-                        setEndHour(parsedValue);
-                      } else if (target.value === "") {
-                        // Optionally, handle the empty case, e.g., reset to 0 or leave blank
-                        setEndHour(undefined); // Set to empty string or some other default value
-                      }
-                    }}
-                  />
-                </FormControl>
-              </FormItem>
-              <FormItem>
-                <FormLabel>Start minute</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Minute"
-                    value={endMinute ?? ""}
-                    onChange={({ target }) => {
-                      const parsedValue = parseInt(target.value, 10);
-                      console.log(parsedValue);
-                      if (!isNaN(parsedValue)) {
-                        setEndMinute(parsedValue);
-                      } else if (target.value === "") {
-                        // Optionally, handle the empty case, e.g., reset to 0 or leave blank
-                        setEndMinute(undefined); // Set to empty string or some other default value
+                        setStartMinute(0); // Set to empty string or some other default value
                       }
                     }}
                   />
