@@ -27,7 +27,7 @@ const Map = ({
         style:
           "https://api.maptiler.com/maps/608de5e8-9e8f-4899-b8ed-b319ac0ce0a4/style.json?key=AWxYqeit04pvjyks83vM", // style URL
         center: [121.14666422082337, 14.733034006356064], // starting position [lng, lat]
-        zoom: 17, // starting zoom
+        zoom: 18, // starting zoom
         maxZoom: 20,
         minZoom: 16,
         attributionControl: false,
@@ -142,6 +142,62 @@ const Map = ({
           paint: {
             "line-width": 1,
             "line-color": "#c3c3c3",
+          },
+        });
+        map.addLayer({
+          id: "buildingSymbolLayers",
+          source: "buildings",
+          type: "symbol",
+          layout: {
+            "text-field": ["get", "label"],
+            "text-size": 10,
+          },
+          paint: {
+            "text-color": "white",
+            "text-halo-color": "black",
+            "text-halo-width": 1,
+          },
+        });
+        map.addLayer({
+          id: "columbarySymbolLayers",
+          source: "columbary",
+          type: "symbol",
+          layout: {
+            "text-field": ["get", "label"],
+            "text-size": 10,
+          },
+          paint: {
+            "text-color": "white",
+            "text-halo-color": "black",
+            "text-halo-width": 1,
+          },
+        });
+        map.addLayer({
+          id: "lawnSymbolLayers",
+          source: "lawn",
+          type: "symbol",
+          layout: {
+            "text-field": ["get", "label"],
+            "text-size": 10,
+          },
+          paint: {
+            "text-color": "white",
+            "text-halo-color": "black",
+            "text-halo-width": 1,
+          },
+        });
+        map.addLayer({
+          id: "apartmentSymbolLayers",
+          source: "apartment",
+          type: "symbol",
+          layout: {
+            "text-field": ["get", "label"],
+            "text-size": 10,
+          },
+          paint: {
+            "text-color": "white",
+            "text-halo-color": "black",
+            "text-halo-width": 1,
           },
         });
       });
